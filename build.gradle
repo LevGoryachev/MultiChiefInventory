@@ -1,0 +1,21 @@
+plugins {
+    id 'war'
+}
+
+group 'ru.goryachev'
+version '1.1'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.4.3'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+war {
+    archiveName 'MultiChiefMRP.war'
+}
