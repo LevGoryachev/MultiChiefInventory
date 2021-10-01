@@ -13,7 +13,7 @@
 <h3>Database scheme</h3>
 
 ![MultiChiefMRP_DB_v1_1](https://user-images.githubusercontent.com/61917893/134813791-eff22c25-8e58-47b9-ae89-4bcde96800f2.jpg)
-me
+
 
 <p>Descriptions:</p>
 

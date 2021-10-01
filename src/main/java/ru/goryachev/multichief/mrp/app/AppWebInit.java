@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = "ru.goryachev.multichief.mrp")
 @EntityScan(basePackages = "ru.goryachev.multichief.mrp")
-public class AppInit extends SpringBootServletInitializer {
+public class AppWebInit extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder appBuilder) {

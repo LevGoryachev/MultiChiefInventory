@@ -1,22 +1,15 @@
 CREATE TABLE "warehouse"(
-id SERIAL PRIMARY KEY,
-internal_doc_num INTEGER
-);
-
-CREATE TABLE "availability"(
-warehouse_id INTEGER REFERENCES "warehouse"(id) ON DELETE CASCADE,
-material_id INTEGER REFERENCES "material"(id) ON DELETE SET NULL,
-warehouse_qty INTEGER,
-PRIMARY KEY(warehouse_id, material_id),
+id BIGSERIAL PRIMARY KEY,
+internal_doc_num BIGINT
 );
 
 CREATE TABLE "bom"(
-id SERIAL PRIMARY KEY,
-internal_doc_num INTEGER
+id BIGSERIAL PRIMARY KEY,
+internal_doc_num BIGINT
 );
 
 CREATE TABLE "material"(
-id SERIAL PRIMARY KEY,
+id BIGSERIAL PRIMARY KEY,
 name VARCHAR(80) NOT NULL,
 um VARCHAR(25) NOT NULL,
 unitweight_kg INTEGER,
@@ -24,17 +17,24 @@ notes TEXT,
 UNIQUE (name)
 );
 
+CREATE TABLE "availability"(
+warehouse_id BIGINT REFERENCES "warehouse"(id) ON DELETE CASCADE,
+material_id BIGINT REFERENCES "material"(id) ON DELETE SET NULL,
+warehouse_qty BIGINT,
+PRIMARY KEY(warehouse_id, material_id)
+);
+
 CREATE TABLE "bom_item"(
-bom_id INTEGER REFERENCES "bom"(id) ON DELETE CASCADE,
-material_id INTEGER REFERENCES "material"(id) ON DELETE SET NULL,
+bom_id BIGINT REFERENCES "bom"(id) ON DELETE CASCADE,
+material_id BIGINT REFERENCES "material"(id) ON DELETE SET NULL,
 bom_qty INTEGER NOT NULL,
 PRIMARY KEY(bom_id, material_id),
 CHECK (bom_qty >= 0)
 );
 
 CREATE TABLE "order"(
-id SERIAL,
-bom_id INTEGER NOT NULL REFERENCES "bom"(id) ON DELETE SET NULL,
+id BIGSERIAL,
+bom_id BIGINT NOT NULL REFERENCES "bom"(id) ON DELETE SET NULL,
 ordertime TIMESTAMP,
 posted BOOLEAN NOT NULL DEFAULT false,
 sent BOOLEAN NOT NULL DEFAULT false,
@@ -44,9 +44,9 @@ UNIQUE(id)
 );
 
 CREATE TABLE "order_item"(
-bom_id INTEGER,
-material_id INTEGER,
-order_id INTEGER,
+bom_id BIGINT,
+material_id BIGINT,
+order_id BIGINT,
 FOREIGN KEY  (bom_id, order_id) REFERENCES "order" (bom_id, id) ON DELETE CASCADE,
 FOREIGN KEY  (bom_id, material_id) REFERENCES "bom_item" (bom_id, material_id) ON DELETE SET NULL,
 PRIMARY KEY (bom_id, material_id, order_id),
