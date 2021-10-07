@@ -1,7 +1,7 @@
 package ru.goryachev.multichief.mrp.model.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.Set;
 
 /**
  * Material - catalogue of all materials (for construction)
@@ -9,6 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "material")
+@SecondaryTable(name = "bom_item", schema = "public", pkJoinColumns = {@PrimaryKeyJoinColumn (name = "material_id", referencedColumnName = "id")})
 public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +26,9 @@ public class Material {
 
     @Column(name = "notes")
     private String notes;
+
+    /*@OneToMany(*//*cascade = CascadeType.ALL, fetch = FetchType.LAZY,*//* mappedBy = "material_id")
+    private Set<Bom> boms;*/
 
     public Long getId() {
         return id;
@@ -54,8 +58,8 @@ public class Material {
         return unit_weight_kg;
     }
 
-    public void setUnit_weight_kg(Integer unitweight_kg) {
-        this.unit_weight_kg = unitweight_kg;
+    public void setUnit_weight_kg(Integer unit_weight_kg) {
+        this.unit_weight_kg = unit_weight_kg;
     }
 
     public String getNotes() {
@@ -64,33 +68,5 @@ public class Material {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Material)) return false;
-        Material material = (Material) o;
-        return Objects.equals(getId(), material.getId()) &&
-                Objects.equals(getName(), material.getName()) &&
-                Objects.equals(getUm(), material.getUm()) &&
-                Objects.equals(getUnit_weight_kg(), material.getUnit_weight_kg()) &&
-                Objects.equals(getNotes(), material.getNotes());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getUm(), getUnit_weight_kg(), getNotes());
-    }
-
-    @Override
-    public String toString() {
-        return "Material{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", um='" + um + '\'' +
-                ", unit_weight_kg=" + unit_weight_kg +
-                ", notes='" + notes + '\'' +
-                '}';
     }
 }

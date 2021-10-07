@@ -1,6 +1,6 @@
 CREATE TABLE "warehouse"(
 id BIGSERIAL PRIMARY KEY,
-internal_doc_num BIGINT
+wh_address VARCHAR(80) NOT NULL
 );
 
 CREATE TABLE "bom"(
@@ -12,7 +12,7 @@ CREATE TABLE "material"(
 id BIGSERIAL PRIMARY KEY,
 name VARCHAR(80) NOT NULL,
 um VARCHAR(25) NOT NULL,
-unitweight_kg INTEGER,
+unit_weight_kg INTEGER,
 notes TEXT,
 UNIQUE (name)
 );
@@ -35,7 +35,7 @@ CHECK (bom_qty >= 0)
 CREATE TABLE "order"(
 id BIGSERIAL,
 bom_id BIGINT NOT NULL REFERENCES "bom"(id) ON DELETE SET NULL,
-ordertime TIMESTAMP,
+order_time TIMESTAMP,
 posted BOOLEAN NOT NULL DEFAULT false,
 sent BOOLEAN NOT NULL DEFAULT false,
 status_executed BOOLEAN NOT NULL DEFAULT false,

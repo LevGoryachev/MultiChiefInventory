@@ -18,7 +18,7 @@
 <p>Descriptions:</p>
 
 <ul>
-<li>bom - bill of materials</li>
+<li>bomOld - bill of materials</li>
 <li>qty - quantity (warehouse_qty, bom_qty, order_qty)</li>
 </ul>
 
