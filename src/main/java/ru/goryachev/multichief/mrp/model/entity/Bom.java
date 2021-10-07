@@ -1,13 +1,14 @@
 package ru.goryachev.multichief.mrp.model.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.Set;
 
 /**
  * BOM - Bill of materials (for certain building construction)
  */
 @Entity
 @Table(name = "bom")
+//@SecondaryTable(name = "bom_item", schema = "public", pkJoinColumns = {@PrimaryKeyJoinColumn (name = "bom_id", referencedColumnName = "id")})
 public class Bom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +16,10 @@ public class Bom {
 
     @Column(name = "internal_doc_num")
     private Integer internal_doc_num;
+
+   /* @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinTable(name = "bom_item", joinColumns = @JoinColumn(name = "bom_id"*//*, referencedColumnName = "id"*//*), inverseJoinColumns = @JoinColumn(name = "material_id"))
+    private Set<MaterialOld> items;*/
 
     public Long getId() {
         return id;
@@ -32,25 +37,4 @@ public class Bom {
         this.internal_doc_num = internal_doc_num;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Bom)) return false;
-        Bom bom = (Bom) o;
-        return Objects.equals(getId(), bom.getId()) &&
-                Objects.equals(getInternal_doc_num(), bom.getInternal_doc_num());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getInternal_doc_num());
-    }
-
-    @Override
-    public String toString() {
-        return "Bom{" +
-                "id=" + id +
-                ", internal_doc_num=" + internal_doc_num +
-                '}';
-    }
 }

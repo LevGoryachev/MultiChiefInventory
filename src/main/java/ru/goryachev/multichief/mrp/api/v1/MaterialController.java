@@ -31,17 +31,17 @@ public class MaterialController {
     }
 
     @PostMapping
-    public ResponseEntity<Material> create (@RequestBody Material material) {
-        return new ResponseEntity<>(materialService.create(material), HttpStatus.OK);
+    public ResponseEntity<Material> create (@RequestBody Material materialOld) {
+        return new ResponseEntity<>(materialService.create(materialOld), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Material> update (@RequestBody Material material) {
-        return new ResponseEntity<>(materialService.update(material), HttpStatus.OK);
+    public ResponseEntity<Material> update (@RequestBody Material materialOld) {
+        return new ResponseEntity<>(materialService.update(materialOld), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<List<Material>> delete (@PathVariable Long id) {
+    public ResponseEntity<Throwable> delete (@PathVariable Long id) {
         materialService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
