@@ -7,6 +7,12 @@ import ru.goryachev.multichief.mrp.repository.MaterialRepository;
 
 import java.util.List;
 
+/**
+ * MaterialService works with Material (entity)
+ * @author Lev Goryachev
+ * @version 1.1
+ */
+
 @Service
 public class MaterialService {
 

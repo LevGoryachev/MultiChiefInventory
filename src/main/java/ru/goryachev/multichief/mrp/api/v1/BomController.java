@@ -32,13 +32,13 @@ public class BomController {
     }
 
     @PostMapping
-    public ResponseEntity<Bom> create (@RequestBody Bom bomOld) {
-        return new ResponseEntity<>(bomService.create(bomOld), HttpStatus.CREATED);
+    public ResponseEntity<Bom> create (@RequestBody Bom bom) {
+        return new ResponseEntity<>(bomService.create(bom), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Bom> update (@RequestBody Bom bomOld) {
-        return new ResponseEntity<>(bomService.update(bomOld), HttpStatus.OK);
+    public ResponseEntity<Bom> update (@RequestBody Bom bom) {
+        return new ResponseEntity<>(bomService.update(bom), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")

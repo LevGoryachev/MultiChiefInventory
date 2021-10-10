@@ -7,4 +7,6 @@ import ru.goryachev.multichief.mrp.model.entity.BomItem;
 @Repository
 public interface BomItemRepository extends JpaRepository <BomItem, Long> {
 
+   void deleteByBomIdAndMaterialId(Long bom_id, Long material_id);
+
 }

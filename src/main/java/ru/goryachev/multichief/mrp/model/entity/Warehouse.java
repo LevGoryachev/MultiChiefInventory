@@ -4,7 +4,9 @@ import javax.persistence.*;
 import java.util.Objects;
 
 /**
- * Warehouse of company
+ * Warehouse of company.
+ * @author Lev Goryachev
+ * @version 1.1
  */
 @Entity
 @Table(name = "warehouse")

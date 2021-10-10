@@ -1,59 +1,52 @@
 package ru.goryachev.multichief.mrp.model.entity;
 
+import ru.goryachev.multichief.mrp.model.keys.BomItemCompositeKey;
+
 import javax.persistence.*;
 
 /**
- * BomItem - Item-position of material (in the bill), has composite key
+ * BomItem - Item position of material (in the bill), has composite key.
+ * @author Lev Goryachev
+ * @version 1.1
  */
+
 @Entity
 @Table(name = "bom_item")
+@IdClass(BomItemCompositeKey.class)
 public class BomItem {
 
-    @EmbeddedId
-    BomItemKey id;
+    @Id
+    @Column (name = "bom_id")
+    private Long bomId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("bom_id")
-    @JoinColumn(name = "bom_id")
-    private Bom bom;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("material_id")
-    @JoinColumn(name = "material_id")
-    private Material material;
+    @Id
+    @Column (name = "material_id")
+    private Long materialId;
 
     @Column(name = "bom_qty")
-    private Long bom_qty;
+    private Integer bomQty;
 
-    public BomItemKey getId() {
-        return id;
+    public Long getBomId() {
+        return bomId;
     }
 
-    public void setId(BomItemKey id) {
-        this.id = id;
+    public void setBomId(Long bomId) {
+        this.bomId = bomId;
     }
 
-    public Bom getBom() {
-        return bom;
+    public Long getMaterialId() {
+        return materialId;
     }
 
-    public void setBom(Bom bom) {
-        this.bom = bom;
+    public void setMaterialId(Long materialId) {
+        this.materialId = materialId;
     }
 
-    public Material getMaterial() {
-        return material;
+    public Integer getBomQty() {
+        return bomQty;
     }
 
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
-    public Long getBom_qty() {
-        return bom_qty;
-    }
-
-    public void setBom_qty(Long bom_qty) {
-        this.bom_qty = bom_qty;
+    public void setBomQty(Integer bomQty) {
+        this.bomQty = bomQty;
     }
 }

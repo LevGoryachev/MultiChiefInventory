@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * Order - a document related with the list of materials for certain construction site (materials were ordered by an employee).
+ * Order - a document that refers to items of materials for a construction site (materials are ordered by an employee).
+ * @author Lev Goryachev
+ * @version 1.1
  */
 @Entity
 @Table(name = "order")

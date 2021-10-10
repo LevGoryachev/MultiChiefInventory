@@ -7,6 +7,12 @@ import ru.goryachev.multichief.mrp.repository.BomRepository;
 
 import java.util.List;
 
+/**
+ * BomService works with Bom (Bill of material entity)
+ * @author Lev Goryachev
+ * @version 1.1
+ */
+
 @Service
 public class BomService {
 

@@ -2,10 +2,19 @@ package ru.goryachev.multichief.mrp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.goryachev.multichief.mrp.model.dto.ItemDto;
 import ru.goryachev.multichief.mrp.model.entity.BomItem;
 import ru.goryachev.multichief.mrp.repository.BomItemRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
+
+/**
+ * BomItemService gets ItemDto (id and quantity of existing material) and converts to BomItem (entity) for saving in DB;
+ * gets BomItem (data from DB) and converts to BomDto (Bill of Materials with items).
+ * @author Lev Goryachev
+ * @version 1.1
+ */
 
 @Service
 public class BomItemService {
@@ -21,20 +30,16 @@ public class BomItemService {
         return bomItemRepository.findAll();
     }
 
-    public BomItem getById (Long id) {
-        return bomItemRepository.findById(id).get();
-    }
-
-    public BomItem create (BomItem bomItem) {
+    public BomItem save (Long BomId, ItemDto itemDto) {
+        BomItem bomItem = new BomItem();
+        bomItem.setBomId(BomId);
+        bomItem.setMaterialId(itemDto.getMaterialId());
+        bomItem.setBomQty(itemDto.getBomQty());
         return bomItemRepository.save(bomItem);
     }
 
-    public BomItem update (BomItem modifiedBomItem) {
-        return bomItemRepository.save(modifiedBomItem);
+    @Transactional
+    public void delete (Long bom_id, Long material_id) {
+       bomItemRepository.deleteByBomIdAndMaterialId(bom_id, material_id);
     }
-
-    public void delete (Long id) {
-        bomItemRepository.deleteById(id);
-    }
-
 }

@@ -1,10 +1,11 @@
 package ru.goryachev.multichief.mrp.model.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
- * Material - catalogue of all materials (for construction)
+ * Material - catalogue unit of all materials (for building construction)
+ * @author Lev Goryachev
+ * @version 1.1
  */
 
 @Entity
