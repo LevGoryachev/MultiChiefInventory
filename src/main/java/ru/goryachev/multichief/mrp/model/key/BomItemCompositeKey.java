@@ -1,4 +1,4 @@
-package ru.goryachev.multichief.mrp.model.keys;
+package ru.goryachev.multichief.mrp.model.key;
 
 import java.io.Serializable;
 
@@ -12,14 +12,14 @@ public class BomItemCompositeKey implements Serializable {
 
     Long bomId;
 
-    Long materialId;
+    Long material;
 
     public BomItemCompositeKey() {
     }
 
     public BomItemCompositeKey(Long bomId, Long materialId) {
         this.bomId = bomId;
-        this.materialId = materialId;
+        this.material = materialId;
     }
 
     public Long getBom_id() {
@@ -31,10 +31,10 @@ public class BomItemCompositeKey implements Serializable {
     }
 
     public Long getMaterialId() {
-        return materialId;
+        return material;
     }
 
     public void setMaterialId(Long materialId) {
-        this.materialId = materialId;
+        this.material = materialId;
     }
 }

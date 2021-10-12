@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "material")
-@SecondaryTable(name = "bom_item", schema = "public", pkJoinColumns = {@PrimaryKeyJoinColumn (name = "material_id", referencedColumnName = "id")})
+//@SecondaryTable(name = "bom_item", schema = "public", pkJoinColumns = {@PrimaryKeyJoinColumn (name = "material_id", referencedColumnName = "id")})
 public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class Material {
     private String um;
 
     @Column(name = "unit_weight_kg")
-    private Integer unit_weight_kg;
+    private Integer unitWeightKg;
 
     @Column(name = "notes")
     private String notes;
@@ -55,12 +55,12 @@ public class Material {
         this.um = um;
     }
 
-    public Integer getUnit_weight_kg() {
-        return unit_weight_kg;
+    public Integer getUnitWeightKg() {
+        return unitWeightKg;
     }
 
-    public void setUnit_weight_kg(Integer unit_weight_kg) {
-        this.unit_weight_kg = unit_weight_kg;
+    public void setUnitWeightKg(Integer unit_weight_kg) {
+        this.unitWeightKg = unit_weight_kg;
     }
 
     public String getNotes() {

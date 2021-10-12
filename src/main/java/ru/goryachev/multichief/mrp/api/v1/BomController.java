@@ -26,11 +26,6 @@ public class BomController {
         return new ResponseEntity<>(bomService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Bom> getById (@PathVariable Long id) {
-        return new ResponseEntity<>(bomService.getById(id), HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<Bom> create (@RequestBody Bom bom) {
         return new ResponseEntity<>(bomService.create(bom), HttpStatus.CREATED);

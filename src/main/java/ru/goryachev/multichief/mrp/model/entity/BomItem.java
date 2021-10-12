@@ -1,6 +1,6 @@
 package ru.goryachev.multichief.mrp.model.entity;
 
-import ru.goryachev.multichief.mrp.model.keys.BomItemCompositeKey;
+import ru.goryachev.multichief.mrp.model.key.BomItemCompositeKey;
 
 import javax.persistence.*;
 
@@ -19,9 +19,13 @@ public class BomItem {
     @Column (name = "bom_id")
     private Long bomId;
 
+   /* @Id
+    @Column (name = "material_id"*//*, insertable = false, updatable = false*//*)
+    private Long materialId;*/
+
     @Id
-    @Column (name = "material_id")
-    private Long materialId;
+    @ManyToOne ()
+    private Material material;
 
     @Column(name = "bom_qty")
     private Integer bomQty;
@@ -34,12 +38,20 @@ public class BomItem {
         this.bomId = bomId;
     }
 
-    public Long getMaterialId() {
+    /*public Long getMaterialId() {
         return materialId;
     }
 
     public void setMaterialId(Long materialId) {
         this.materialId = materialId;
+    }*/
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public Integer getBomQty() {

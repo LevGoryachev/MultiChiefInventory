@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.goryachev.multichief.mrp.model.dto.ItemDto;
+import ru.goryachev.multichief.mrp.model.dto.BomResponseDto;
+import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
 import ru.goryachev.multichief.mrp.model.entity.BomItem;
 import ru.goryachev.multichief.mrp.service.BomItemService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/bom/{bomId}/items")
@@ -22,22 +21,22 @@ public class BomItemController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BomItem>> getBomItems () {
-        return new ResponseEntity<>(bomItemService.getAll(), HttpStatus.OK);
+    public ResponseEntity<BomResponseDto> getBomResponseDto (@PathVariable Long bomId) {
+        return new ResponseEntity<>(bomItemService.getBomResponseDto(bomId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<BomItem> create (@PathVariable Long bomId, @RequestBody ItemDto itemDto) {
-        return new ResponseEntity<>(bomItemService.save(bomId, itemDto), HttpStatus.CREATED);
+    public ResponseEntity<BomItem> createItems (@PathVariable Long bomId, @RequestBody ItemRequestDto itemRequestDto) {
+        return new ResponseEntity<>(bomItemService.save(bomId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<BomItem> update (@PathVariable Long bomId, @RequestBody ItemDto itemDto) {
-        return new ResponseEntity<>(bomItemService.save(bomId, itemDto), HttpStatus.CREATED);
+    public ResponseEntity<BomItem> updateItems (@PathVariable Long bomId, @RequestBody ItemRequestDto itemRequestDto) {
+        return new ResponseEntity<>(bomItemService.save(bomId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{materialId}")
-    public ResponseEntity<Throwable> delete (@PathVariable Long bomId, @PathVariable Long materialId) {
+    public ResponseEntity<Throwable> deleteItems (@PathVariable Long bomId, @PathVariable Long materialId) {
         bomItemService.delete(bomId, materialId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

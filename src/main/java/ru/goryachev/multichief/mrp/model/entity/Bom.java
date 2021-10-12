@@ -1,25 +1,21 @@
 package ru.goryachev.multichief.mrp.model.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
- * BOM - Bill of materials (for certain building construction)
+ * Bom - Bill of materials (for certain building construction), head of the document
+ * @author Lev Goryachev
+ * @version 1.1
  */
 @Entity
 @Table(name = "bom")
-//@SecondaryTable(name = "bom_item", schema = "public", pkJoinColumns = {@PrimaryKeyJoinColumn (name = "bom_id", referencedColumnName = "id")})
 public class Bom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "internal_doc_num")
-    private Integer internal_doc_num;
-
-   /* @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinTable(name = "bom_item", joinColumns = @JoinColumn(name = "bom_id"*//*, referencedColumnName = "id"*//*), inverseJoinColumns = @JoinColumn(name = "material_id"))
-    private Set<MaterialOld> items;*/
+    private Integer internalDocNum;
 
     public Long getId() {
         return id;
@@ -29,12 +25,11 @@ public class Bom {
         this.id = id;
     }
 
-    public Integer getInternal_doc_num() {
-        return internal_doc_num;
+    public Integer getInternalDocNum() {
+        return internalDocNum;
     }
 
-    public void setInternal_doc_num(Integer internal_doc_num) {
-        this.internal_doc_num = internal_doc_num;
+    public void setInternalDocNum(Integer internalDocNum) {
+        this.internalDocNum = internalDocNum;
     }
-
 }

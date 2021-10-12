@@ -27,10 +27,6 @@ public class BomService {
         return bomRepository.findAll();
     }
 
-    public Bom getById (Long id) {
-        return bomRepository.findById(id).get();
-    }
-
     public Bom create (Bom bom) {
         return bomRepository.save(bom);
     }
