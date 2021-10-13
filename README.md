@@ -22,4 +22,4 @@
 <li>qty - quantity (warehouse_qty, bom_qty, order_qty)</li>
 </ul>
 
-<p>Free software for educational purposes. Author: Lev Goryachev.</p>
+<p>MultiChief (ERP). License: GNU GPL v3. Copyright (C) 2021 Lev Goryachev.</p>
