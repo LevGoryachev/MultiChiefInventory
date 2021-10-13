@@ -22,7 +22,6 @@ import javax.transaction.Transactional;
 public class BomItemService {
 
     private BomItemRepository bomItemRepository;
-    //private BomDtoRepository bomDtoRepository;
     private BomRepository bomRepository;
     private MaterialRepository materialRepository; //look for the cached data (where?)
 
@@ -33,11 +32,6 @@ public class BomItemService {
         this.materialRepository = materialRepository;
     }
 
-    /*public List<BomItem> getAllOld () {
-        return bomItemRepository.findAll();
-    }*/
-
-    //May be move to BomService
     @Transactional
     public BomResponseDto getBomResponseDto (Long bomId) {
         BomResponseDto bomResponseDto = new BomResponseDto();
@@ -47,25 +41,9 @@ public class BomItemService {
         return bomResponseDto;
     }
 
-    // need to remove
-    /*public List<BomDto> getAllBomItems (Long BomId) {
-        return bomDtoRepository.findAll();
-    }*/
-
-    public BomItem save (Long BomId, ItemRequestDto itemRequestDto) {
-        BomItem bomItem = new BomItem();
-        bomItem.setBomId(BomId);
-        bomItem.setMaterial(materialRepository.findById(itemRequestDto.getMaterialId()).get()); // set "if else" or exceptions
-        //bomItem.setMaterialId(itemDto.getMaterialId());
+    public BomItem save (Long bomId, ItemRequestDto itemRequestDto) {
+        BomItem bomItem = new BomItem(bomRepository.getOne(bomId), materialRepository.getOne(itemRequestDto.getMaterialId()));
         bomItem.setBomQty(itemRequestDto.getBomQty());
-        /*BomItem savedBomItem = bomItemRepository.save(bomItem);
-
-        BomResponseDto bomResponseDto = new BomResponseDto();
-        bomResponseDto.setId(savedBomItem.getBomId());
-        bomResponseDto.setInternalDocNum(bomRepository.findById(savedBomItem.getBomId()).get().getInternalDocNum());
-        List<ItemView> itemViews =
-
-        bomResponseDto.setItems();*/
         return bomItemRepository.save(bomItem);
     }
 

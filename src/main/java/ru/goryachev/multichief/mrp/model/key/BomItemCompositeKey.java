@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class BomItemCompositeKey implements Serializable {
 
-    Long bomId;
+    Long bom;
 
     Long material;
 
@@ -18,16 +18,16 @@ public class BomItemCompositeKey implements Serializable {
     }
 
     public BomItemCompositeKey(Long bomId, Long materialId) {
-        this.bomId = bomId;
+        this.bom = bomId;
         this.material = materialId;
     }
 
     public Long getBom_id() {
-        return bomId;
+        return bom;
     }
 
     public void setBom_id(Long bom_id) {
-        this.bomId = bom_id;
+        this.bom = bom_id;
     }
 
     public Long getMaterialId() {

@@ -25,6 +25,11 @@ public class BomItemController {
         return new ResponseEntity<>(bomItemService.getBomResponseDto(bomId), HttpStatus.OK);
     }
 
+    /*@PostMapping
+    public ResponseEntity<BomItem> createItems (@PathVariable Long bomId, @RequestBody Set<ItemRequestDto> itemRequestDtos) {
+        return new ResponseEntity<>(bomItemService.save(bomId, itemRequestDtos), HttpStatus.CREATED);
+    }*/
+
     @PostMapping
     public ResponseEntity<BomItem> createItems (@PathVariable Long bomId, @RequestBody ItemRequestDto itemRequestDto) {
         return new ResponseEntity<>(bomItemService.save(bomId, itemRequestDto), HttpStatus.CREATED);

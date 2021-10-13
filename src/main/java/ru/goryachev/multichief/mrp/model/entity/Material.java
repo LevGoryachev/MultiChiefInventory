@@ -1,6 +1,9 @@
 package ru.goryachev.multichief.mrp.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Material - catalogue unit of all materials (for building construction)
@@ -10,6 +13,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "material")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 //@SecondaryTable(name = "bom_item", schema = "public", pkJoinColumns = {@PrimaryKeyJoinColumn (name = "material_id", referencedColumnName = "id")})
 public class Material {
     @Id

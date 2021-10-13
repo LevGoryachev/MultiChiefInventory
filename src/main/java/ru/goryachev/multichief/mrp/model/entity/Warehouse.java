@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 /**
- * Warehouse of company.
+ * Warehouse - a document that refers to items of materials that are available in the warehouse of company.
  * @author Lev Goryachev
  * @version 1.1
  */

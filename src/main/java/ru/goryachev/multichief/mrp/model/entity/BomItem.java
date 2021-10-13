@@ -4,6 +4,7 @@ import ru.goryachev.multichief.mrp.model.key.BomItemCompositeKey;
 
 import javax.persistence.*;
 
+
 /**
  * BomItem - Item position of material (in the bill), has composite key.
  * @author Lev Goryachev
@@ -16,35 +17,39 @@ import javax.persistence.*;
 public class BomItem {
 
     @Id
-    @Column (name = "bom_id")
-    private Long bomId;
-
-   /* @Id
-    @Column (name = "material_id"*//*, insertable = false, updatable = false*//*)
-    private Long materialId;*/
+    @ManyToOne
+    private Bom bom;
 
     @Id
-    @ManyToOne ()
+    @ManyToOne
     private Material material;
+
+    /*@Id
+    @Column (name = "bom_id")
+    private Long bomId;*/
+
+    /*@Id
+    @Column (name = "material_id", insertable = false, updatable = false)
+    private Long materialId;*/
 
     @Column(name = "bom_qty")
     private Integer bomQty;
 
-    public Long getBomId() {
-        return bomId;
+    public BomItem() {
     }
 
-    public void setBomId(Long bomId) {
-        this.bomId = bomId;
+    public BomItem(Bom bom, Material material) {
+        this.bom = bom;
+        this.material = material;
     }
 
-    /*public Long getMaterialId() {
-        return materialId;
+    public Bom getBom() {
+        return bom;
     }
 
-    public void setMaterialId(Long materialId) {
-        this.materialId = materialId;
-    }*/
+    public void setBom(Bom bom) {
+        this.bom = bom;
+    }
 
     public Material getMaterial() {
         return material;

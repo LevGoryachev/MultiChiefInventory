@@ -1,5 +1,7 @@
 package ru.goryachev.multichief.mrp.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 /**
@@ -7,8 +9,10 @@ import javax.persistence.*;
  * @author Lev Goryachev
  * @version 1.1
  */
+
 @Entity
 @Table(name = "bom")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Bom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
