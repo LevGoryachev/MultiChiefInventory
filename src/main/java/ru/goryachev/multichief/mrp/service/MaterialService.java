@@ -8,7 +8,7 @@ import ru.goryachev.multichief.mrp.repository.MaterialRepository;
 import java.util.List;
 
 /**
- * MaterialService works with Material (entity)
+ * MaterialService works with Material (catalogue units entities and DTOs)
  * @author Lev Goryachev
  * @version 1.1
  */

@@ -36,8 +36,8 @@ public class BomItemController {
     }
 
     @PutMapping
-    public ResponseEntity<BomItem> updateItems (@PathVariable Long bomId, @RequestBody ItemRequestDto itemRequestDto) {
-        return new ResponseEntity<>(bomItemService.save(bomId, itemRequestDto), HttpStatus.CREATED);
+    public ResponseEntity<BomItem> updateItems (@PathVariable Long bomId, @RequestBody ItemRequestDto modifiedItemDto) {
+        return new ResponseEntity<>(bomItemService.save(bomId, modifiedItemDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{materialId}")

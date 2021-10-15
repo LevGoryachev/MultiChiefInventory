@@ -43,7 +43,7 @@ public class BomItemService {
 
     public BomItem save (Long bomId, ItemRequestDto itemRequestDto) {
         BomItem bomItem = new BomItem(bomRepository.getOne(bomId), materialRepository.getOne(itemRequestDto.getMaterialId()));
-        bomItem.setBomQty(itemRequestDto.getBomQty());
+        bomItem.setBomQty(itemRequestDto.getQty());
         return bomItemRepository.save(bomItem);
     }
 

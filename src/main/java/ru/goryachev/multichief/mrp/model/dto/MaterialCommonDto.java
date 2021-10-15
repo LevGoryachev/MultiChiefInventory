@@ -1,34 +1,25 @@
-package ru.goryachev.multichief.mrp.model.entity;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+package ru.goryachev.multichief.mrp.model.dto;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
- * Material - catalogue unit of all materials (for building construction)
+ * MaterialCommonDto is an intermediate object of catalogue unit of all materials (for building construction),
+ * and it is used for communication between microservices.
  * @author Lev Goryachev
  * @version 1.1
  */
 
-@Entity
-@Table(name = "material")
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
-public class Material {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class MaterialCommonDto {
+
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "um")
     private String um;
 
-    @Column(name = "unit_weight_kg")
     private Integer unitWeightKg;
 
-    @Column(name = "notes")
     private String notes;
 
     public Long getId() {

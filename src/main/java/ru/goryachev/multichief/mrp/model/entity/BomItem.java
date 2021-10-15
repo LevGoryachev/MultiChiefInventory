@@ -33,7 +33,7 @@ public class BomItem {
     private Long materialId;*/
 
     @Column(name = "bom_qty")
-    private Integer bomQty;
+    private Integer bomQty;     //rename to Qty for projection
 
     public BomItem() {
     }

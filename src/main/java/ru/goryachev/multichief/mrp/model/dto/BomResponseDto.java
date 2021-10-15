@@ -1,11 +1,11 @@
 package ru.goryachev.multichief.mrp.model.dto;
 
-import ru.goryachev.multichief.mrp.model.dto.projection.ItemView;
+import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
 
 import java.util.List;
 
 /**
- * BomDto - a presentable bill of materials (for certain building construction or object)
+ * BomDto is a preform for a presentable document - bill of materials (for certain building construction or object)
  * contains a head of document and list of materials (items).
  * @author Lev Goryachev
  * @version 1.1
@@ -17,7 +17,7 @@ public class BomResponseDto {
 
     private Integer internalDocNum;
 
-    private List<ItemView> items;
+    private List<ItemProjection> items;
 
     public Long getId() {
         return id;
@@ -35,11 +35,11 @@ public class BomResponseDto {
         this.internalDocNum = internalDocNum;
     }
 
-    public List<ItemView> getItems() {
+    public List<ItemProjection> getItems() {
         return items;
     }
 
-    public void setItems(List<ItemView> items) {
+    public void setItems(List<ItemProjection> items) {
         this.items = items;
     }
 }

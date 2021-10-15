@@ -13,7 +13,7 @@ public class ItemRequestDto {
 
     private Long materialId;
 
-    private Integer bomQty;
+    private Integer qty;
 
     public Long getMaterialId() {
         return materialId;
@@ -23,11 +23,11 @@ public class ItemRequestDto {
         this.materialId = materialId;
     }
 
-    public Integer getBomQty() {
-        return bomQty;
+    public Integer getQty() {
+        return qty;
     }
 
-    public void setBomQty(Integer bomQty) {
-        this.bomQty = bomQty;
+    public void setQty(Integer qty) {
+        this.qty = qty;
     }
 }

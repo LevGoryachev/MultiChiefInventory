@@ -2,7 +2,6 @@ package ru.goryachev.multichief.mrp.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  * Order - a document that refers to items of materials for a construction site (materials are ordered by an employee).
@@ -10,14 +9,17 @@ import java.util.Objects;
  * @version 1.1
  */
 @Entity
-@Table(name = "order")
+@Table(name = "im_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "bom_id")
+    private Long bomId;
+
     @Column(name = "order_time")
-    private LocalDateTime order_time;
+    private LocalDateTime orderTime;
 
     @Column(name = "posted")
     private Boolean posted;
@@ -26,10 +28,7 @@ public class Order {
     private Boolean sent;
 
     @Column(name = "status_executed")
-    private Boolean status_executed;
-
-    //field bom_id in process
-
+    private Boolean statusExecuted;
 
     public Long getId() {
         return id;
@@ -39,12 +38,20 @@ public class Order {
         this.id = id;
     }
 
-    public LocalDateTime getOrder_time() {
-        return order_time;
+    public Long getBomId() {
+        return bomId;
     }
 
-    public void setOrder_time(LocalDateTime order_time) {
-        this.order_time = order_time;
+    public void setBomId(Long bomId) {
+        this.bomId = bomId;
+    }
+
+    public LocalDateTime getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(LocalDateTime orderTime) {
+        this.orderTime = orderTime;
     }
 
     public Boolean getPosted() {
@@ -63,39 +70,11 @@ public class Order {
         this.sent = sent;
     }
 
-    public Boolean getStatus_executed() {
-        return status_executed;
+    public Boolean getStatusExecuted() {
+        return statusExecuted;
     }
 
-    public void setStatus_executed(Boolean status_executed) {
-        this.status_executed = status_executed;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Order)) return false;
-        Order order = (Order) o;
-        return Objects.equals(getId(), order.getId()) &&
-                Objects.equals(getOrder_time(), order.getOrder_time()) &&
-                Objects.equals(getPosted(), order.getPosted()) &&
-                Objects.equals(getSent(), order.getSent()) &&
-                Objects.equals(getStatus_executed(), order.getStatus_executed());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getOrder_time(), getPosted(), getSent(), getStatus_executed());
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", order_time=" + order_time +
-                ", posted=" + posted +
-                ", sent=" + sent +
-                ", status_executed=" + status_executed +
-                '}';
+    public void setStatusExecuted(Boolean statusExecuted) {
+        this.statusExecuted = statusExecuted;
     }
 }

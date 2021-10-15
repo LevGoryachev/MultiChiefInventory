@@ -32,8 +32,8 @@ public class BomController {
     }
 
     @PutMapping
-    public ResponseEntity<Bom> update (@RequestBody Bom bom) {
-        return new ResponseEntity<>(bomService.update(bom), HttpStatus.OK);
+    public ResponseEntity<Bom> update (@RequestBody Bom modifiedBom) {
+        return new ResponseEntity<>(bomService.update(modifiedBom), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")

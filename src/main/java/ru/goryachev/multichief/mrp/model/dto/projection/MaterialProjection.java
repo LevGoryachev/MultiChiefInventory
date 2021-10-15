@@ -4,7 +4,7 @@ package ru.goryachev.multichief.mrp.model.dto.projection;
  * @author Lev Goryachev
  * @version 1.1
  */
-public interface MaterialView {
+public interface MaterialProjection {
     Long getId();
     String getName();
     String getUm();

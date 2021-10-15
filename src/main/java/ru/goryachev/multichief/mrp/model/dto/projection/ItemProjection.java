@@ -4,7 +4,7 @@ package ru.goryachev.multichief.mrp.model.dto.projection;
  * @author Lev Goryachev
  * @version 1.1
  */
-public interface ItemView {
-    MaterialView getMaterial();
-    Integer getBomQty();
+public interface ItemProjection {
+    MaterialProjection getMaterial();
+    Integer getBomQty(); // rename to Qty
 }

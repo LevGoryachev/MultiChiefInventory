@@ -31,13 +31,13 @@ public class MaterialController {
     }
 
     @PostMapping
-    public ResponseEntity<Material> create (@RequestBody Material materialOld) {
-        return new ResponseEntity<>(materialService.create(materialOld), HttpStatus.CREATED);
+    public ResponseEntity<Material> create (@RequestBody Material material) {
+        return new ResponseEntity<>(materialService.create(material), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Material> update (@RequestBody Material materialOld) {
-        return new ResponseEntity<>(materialService.update(materialOld), HttpStatus.OK);
+    public ResponseEntity<Material> update (@RequestBody Material modifiedMaterial) {
+        return new ResponseEntity<>(materialService.update(modifiedMaterial), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")

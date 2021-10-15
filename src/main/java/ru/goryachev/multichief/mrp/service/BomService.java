@@ -8,7 +8,7 @@ import ru.goryachev.multichief.mrp.repository.BomRepository;
 import java.util.List;
 
 /**
- * BomService works with Bom (Bill of material entity)
+ * BomService works with Bom (Bill of material entities and DTOs)
  * @author Lev Goryachev
  * @version 1.1
  */
