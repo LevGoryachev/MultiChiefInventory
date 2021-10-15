@@ -1,3 +1,5 @@
+-- MultiChiefMRP, version 1.2, syntax: Postgres
+
 CREATE TABLE "warehouse"(
 id BIGSERIAL PRIMARY KEY,
 wh_address VARCHAR(80) NOT NULL
@@ -20,8 +22,9 @@ UNIQUE (name)
 CREATE TABLE "availability"(
 warehouse_id BIGINT REFERENCES "warehouse"(id) ON DELETE CASCADE,
 material_id BIGINT REFERENCES "material"(id) ON DELETE SET NULL,
+PRIMARY KEY(warehouse_id, material_id),
 warehouse_qty BIGINT,
-PRIMARY KEY(warehouse_id, material_id)
+CHECK (warehouse_qty > 0)
 );
 
 CREATE TABLE "bom_item"(
@@ -32,10 +35,10 @@ PRIMARY KEY(bom_id, material_id),
 CHECK (bom_qty >= 0)
 );
 
-CREATE TABLE "order"(
+CREATE TABLE "im_order"(
 id BIGSERIAL,
 bom_id BIGINT NOT NULL REFERENCES "bom"(id) ON DELETE SET NULL,
-order_time TIMESTAMP,
+im_order_time TIMESTAMP,
 posted BOOLEAN NOT NULL DEFAULT false,
 sent BOOLEAN NOT NULL DEFAULT false,
 status_executed BOOLEAN NOT NULL DEFAULT false,
@@ -43,14 +46,14 @@ PRIMARY KEY (bom_id, id),
 UNIQUE(id)
 );
 
-CREATE TABLE "order_item"(
+CREATE TABLE "im_order_item"(
 bom_id BIGINT,
 material_id BIGINT,
-order_id BIGINT,
-FOREIGN KEY  (bom_id, order_id) REFERENCES "order" (bom_id, id) ON DELETE CASCADE,
+im_order_id BIGINT,
+FOREIGN KEY  (bom_id, im_order_id) REFERENCES "im_order" (bom_id, id) ON DELETE CASCADE,
 FOREIGN KEY  (bom_id, material_id) REFERENCES "bom_item" (bom_id, material_id) ON DELETE SET NULL,
-PRIMARY KEY (bom_id, material_id, order_id),
+PRIMARY KEY (bom_id, material_id, im_order_id),
 status_delivered BOOLEAN NOT NULL DEFAULT false,
-order_qty INTEGER NOT NULL,
-CHECK (order_qty > 0)
+im_order_qty INTEGER NOT NULL,
+CHECK (im_order_qty > 0)
 );

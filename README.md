@@ -7,7 +7,7 @@
 
 <p>Database structure in files:</p>
 <ul>
-<li><b>MultiChiefMRP_DDL_v1.1.sql</b></li>
+<li><b>MultiChiefMRP_DDL_v1.2.sql</b></li>
 </ul>
 
 <h3>Database scheme</h3>
@@ -19,6 +19,7 @@
 
 <ul>
 <li>bomOld - bill of materials</li>
+<li>im_order - internal material order</li>
 <li>qty - quantity (warehouse_qty, bom_qty, order_qty)</li>
 </ul>
 
