@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Order - a document that refers to items of materials for a construction site (materials are ordered by an employee).
+ * ImOrder is an internal material order that refers to items of materials for a construction site (materials are ordered by an employee).
  * @author Lev Goryachev
  * @version 1.1
  */
 @Entity
 @Table(name = "im_order")
-public class Order {
+public class ImOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +18,7 @@ public class Order {
     @Column(name = "bom_id")
     private Long bomId;
 
-    @Column(name = "order_time")
+    @Column(name = "im_order_time")
     private LocalDateTime orderTime;
 
     @Column(name = "posted")

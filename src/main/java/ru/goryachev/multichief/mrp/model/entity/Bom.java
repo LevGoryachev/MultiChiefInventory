@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 /**
- * Bom - Bill of materials (for certain building construction), head of the document
+ * Bom is a bill of materials (for certain building construction), head of the document
  * @author Lev Goryachev
  * @version 1.1
  */

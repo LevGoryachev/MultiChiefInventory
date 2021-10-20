@@ -1,7 +1,6 @@
 # MultiChiefMRP
-<p>MultiChief is an experimental microservice-based ERP system for construction industry. <p/>
+<p><b>MultiChief</b> is an experimental microservice-based ERP system for construction industry (on-line and off-line interaction between departments and employees). <p/>
 <p><b>MultiChiefMRP</b> is a microservice that is responsible for preparing data (DTO) for MultiChiefMain (main service <a href="https://github.com/LevGoryachev/MultiChiefMain">MultiChiefMain</a>).</p> 
-<p>Generally, the whole MultiChief web-app is intended for on-line and off-line interaction between departments and employees.</p>
 <p><b>Summary: Java 11, Spring-Boot, Spring Security, Spring Data JPA (Hibernate)</b></p>
 <p><b>Database: PostgreSQL</b></p>
 
@@ -19,7 +18,7 @@
 
 <ul>
 <li>bomOld - bill of materials</li>
-<li>im_order - internal material order</li>
+<li>im_order - internal material imOrder</li>
 <li>qty - quantity (warehouse_qty, bom_qty, order_qty)</li>
 </ul>
 

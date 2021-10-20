@@ -1,7 +1,6 @@
 package ru.goryachev.multichief.mrp.model.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 /**
  * Warehouse - a document that refers to items of materials that are available in the warehouse of company.
@@ -16,7 +15,7 @@ public class Warehouse {
     private Long id;
 
     @Column(name = "wh_address")
-    private String wh_address;
+    private String whAddress;
 
     public Long getId() {
         return id;
@@ -26,33 +25,11 @@ public class Warehouse {
         this.id = id;
     }
 
-    public String getWh_address() {
-        return wh_address;
+    public String getWhAddress() {
+        return whAddress;
     }
 
-    public void setWh_address(String wh_address) {
-        this.wh_address = wh_address;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Warehouse)) return false;
-        Warehouse warehouse = (Warehouse) o;
-        return Objects.equals(getId(), warehouse.getId()) &&
-                Objects.equals(getWh_address(), warehouse.getWh_address());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getWh_address());
-    }
-
-    @Override
-    public String toString() {
-        return "Warehouse{" +
-                "id=" + id +
-                ", wh_address='" + wh_address + '\'' +
-                '}';
+    public void setWhAddress(String whAddress) {
+        this.whAddress = whAddress;
     }
 }

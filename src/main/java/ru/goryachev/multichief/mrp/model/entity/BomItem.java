@@ -24,14 +24,6 @@ public class BomItem {
     @ManyToOne
     private Material material;
 
-    /*@Id
-    @Column (name = "bom_id")
-    private Long bomId;*/
-
-    /*@Id
-    @Column (name = "material_id", insertable = false, updatable = false)
-    private Long materialId;*/
-
     @Column(name = "bom_qty")
     private Integer bomQty;     //rename to Qty for projection
 
