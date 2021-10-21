@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.goryachev.multichief.mrp.model.dto.BomResponseDto;
+import ru.goryachev.multichief.mrp.model.dto.PreformBomResponseDto;
 import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
 import ru.goryachev.multichief.mrp.model.entity.Bom;
 import ru.goryachev.multichief.mrp.model.entity.BomItem;
@@ -15,13 +15,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/boms")
-public class PreformBomController {
+public class UnitedBomController {
 
     private BomService bomService;
     private BomItemService bomItemService;
 
     @Autowired
-    public PreformBomController(BomService bomService, BomItemService bomItemService) {
+    public UnitedBomController(BomService bomService, BomItemService bomItemService) {
         this.bomService = bomService;
         this.bomItemService = bomItemService;
     }
@@ -46,28 +46,28 @@ public class PreformBomController {
         return new ResponseEntity<>(bomService.update(modifiedBom), HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")//remove id and implement deleteAllBy
-    public ResponseEntity<Throwable> deleteBoms (@PathVariable Long id) {
-        bomService.delete(id);
+    @DeleteMapping("{bomId}")//remove id and implement deleteAllBy
+    public ResponseEntity<Throwable> deleteBoms (@PathVariable Long bomId) {
+        bomService.delete(bomId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
-     * getBomResponseDto(bill of material ID) returns BomResponseDto - a preform of bill of material.
-     * The preform can be adapted by the consumer (next microservice) for preparing ready-to-use document (ViewModel).
+     * getBomPreform returns PreformBomResponseDto - a preform of bill of materials document.
+     * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{bomId}")
-    public ResponseEntity<BomResponseDto> getBomResponseDto (@PathVariable Long bomId) {
+    public ResponseEntity<PreformBomResponseDto> getBomPreform (@PathVariable Long bomId) {
         return new ResponseEntity<>(bomItemService.getBomResponseDto(bomId), HttpStatus.OK);
     }
 
     @GetMapping("{bomId}/items")
-    public ResponseEntity<BomResponseDto> getAllItems (@PathVariable Long bomId) {
+    public ResponseEntity<PreformBomResponseDto> getAllItems (@PathVariable Long bomId) {
         return new ResponseEntity<>(bomItemService.getBomResponseDto(bomId), HttpStatus.OK);
     }
 
     /*@GetMapping("{bomId}/items")// add @Params and getAllById and may be unit with getAllItems
-    public ResponseEntity<BomResponseDto> getItems (@PathVariable Long bomId) {
+    public ResponseEntity<PreformBomResponseDto> getItems (@PathVariable Long bomId) {
         return new ResponseEntity<>(bomItemService.getBomResponseDto(bomId), HttpStatus.OK);
     }*/
 

@@ -2,7 +2,7 @@ package ru.goryachev.multichief.mrp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.mrp.model.dto.BomResponseDto;
+import ru.goryachev.multichief.mrp.model.dto.PreformBomResponseDto;
 import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
 import ru.goryachev.multichief.mrp.model.entity.BomItem;
 import ru.goryachev.multichief.mrp.repository.BomItemRepository;
@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
 
 /**
  * BomItemService gets ItemDto (id and quantity of existing material) and converts to BomItem (entity) for saving in DB;
- * gets BomItem (data from DB) and converts to BomDto (Bill of Materials with items).
+ * gets BomItem (data from DB) and converts to PreformBomResponseDto (Bill of Materials with items).
  * @author Lev Goryachev
  * @version 1.1
  */
@@ -33,22 +33,23 @@ public class BomItemService {
     }
 
     @Transactional
-    public BomResponseDto getBomResponseDto (Long bomId) {
-        BomResponseDto bomResponseDto = new BomResponseDto();
-        bomResponseDto.setId(bomId);
-        bomResponseDto.setInternalDocNum(bomRepository.findById(bomId).get().getInternalDocNum());
-        bomResponseDto.setItems(bomItemRepository.findByBomId(bomId));
-        return bomResponseDto;
+    public PreformBomResponseDto getBomResponseDto (Long bomId) {
+        PreformBomResponseDto preformBomResponseDto = new PreformBomResponseDto();
+        preformBomResponseDto.setId(bomId);
+        preformBomResponseDto.setInternalDocNum(bomRepository.findById(bomId).get().getInternalDocNum());
+        preformBomResponseDto.setItems(bomItemRepository.findByBomId(bomId));
+        return preformBomResponseDto;
     }
 
+    @Transactional
     public BomItem save (Long bomId, ItemRequestDto itemRequestDto) {
         BomItem bomItem = new BomItem(bomRepository.getOne(bomId), materialRepository.getOne(itemRequestDto.getMaterialId()));
-        bomItem.setBomQty(itemRequestDto.getQty());
+        bomItem.setQty(itemRequestDto.getQty());
         return bomItemRepository.save(bomItem);
     }
 
     @Transactional
-    public void delete (Long bom_id, Long material_id) {
-       bomItemRepository.deleteByBomIdAndMaterialId(bom_id, material_id);
+    public void delete (Long bomId, Long materialId) {
+       bomItemRepository.deleteByBomIdAndMaterialId(bomId, materialId);
     }
 }

@@ -11,12 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/warehouses")
-public class PreformWarehouseController {
+public class UnitedWarehouseController {
 
     private WarehouseService warehouseService;
 
     @Autowired
-    public PreformWarehouseController(WarehouseService warehouseService) {
+    public UnitedWarehouseController(WarehouseService warehouseService) {
         this.warehouseService = warehouseService;
     }
 

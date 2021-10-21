@@ -6,5 +6,5 @@ package ru.goryachev.multichief.mrp.model.dto.projection;
  */
 public interface ItemProjection {
     MaterialProjection getMaterial();
-    Integer getBomQty(); // rename to Qty
+    Integer getQty(); // renamed to qty
 }

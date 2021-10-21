@@ -1,37 +1,35 @@
-package ru.goryachev.multichief.mrp.model.entity;
+package ru.goryachev.multichief.mrp.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
- * ImOrder is an internal material order that refers to items of materials for a construction site (materials are ordered by an employee).
+ * BomDto is a preform for a presentable document - bill of materials (for certain building construction or object)
+ * contains a head of document and list of materials (items).
  * @author Lev Goryachev
  * @version 1.1
  */
-@Entity
-@Table(name = "im_order")
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
-public class ImOrder {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class PreformImOrderResponseDto {
+
     private Long id;
 
-    @Column(name = "bom_id")
     private Long bomId;
 
-    @Column(name = "im_order_time")
     private LocalDateTime orderTime;
 
-    @Column(name = "posted")
     private Boolean posted;
 
-    @Column(name = "sent")
     private Boolean sent;
 
-    @Column(name = "status_executed")
     private Boolean statusExecuted;
+
+    private List<ItemProjection> items;
 
     public Long getId() {
         return id;
@@ -79,5 +77,13 @@ public class ImOrder {
 
     public void setStatusExecuted(Boolean statusExecuted) {
         this.statusExecuted = statusExecuted;
+    }
+
+    public List<ItemProjection> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemProjection> items) {
+        this.items = items;
     }
 }

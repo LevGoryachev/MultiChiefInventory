@@ -11,7 +11,7 @@ import java.util.List;
  * @version 1.1
  */
 
-public class BomResponseDto {
+public class PreformBomResponseDto {
 
     private Long id;
 

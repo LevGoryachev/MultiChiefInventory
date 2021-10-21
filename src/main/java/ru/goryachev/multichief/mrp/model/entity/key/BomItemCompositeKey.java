@@ -1,9 +1,9 @@
-package ru.goryachev.multichief.mrp.model.key;
+package ru.goryachev.multichief.mrp.model.entity.key;
 
 import java.io.Serializable;
 
 /**
- * BomItemKey - composite key class
+ * BomItemCompositeKey - composite key class
  * @author Lev Goryachev
  * @version 1.1
  */

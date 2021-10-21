@@ -1,8 +1,8 @@
-package ru.goryachev.multichief.mrp.model.dto;
+package ru.goryachev.multichief.mrp.model.dto.common;
 
 /**
  * BomCommonDto is an intermediate object of bill of materials (for certain building construction), head of the document,
- * and it is used for communication between microservices.
+ * and it is used for requests and responses (communication between microservices).
  * @author Lev Goryachev
  * @version 1.1
  */

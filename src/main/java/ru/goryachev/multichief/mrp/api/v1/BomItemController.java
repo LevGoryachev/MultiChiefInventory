@@ -1,14 +1,5 @@
 package ru.goryachev.multichief.mrp.api.v1;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import ru.goryachev.multichief.mrp.model.dto.BomResponseDto;
-import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
-import ru.goryachev.multichief.mrp.model.entity.BomItem;
-import ru.goryachev.multichief.mrp.service.BomItemService;
-
 //@RestController
 //@RequestMapping("/api/v1/bom/{bomId}/items")
 public class BomItemController {
@@ -21,7 +12,7 @@ public class BomItemController {
 //    }
 //
 //    @GetMapping
-//    public ResponseEntity<BomResponseDto> getBomResponseDto (@PathVariable Long bomId) {
+//    public ResponseEntity<PreformBomResponseDto> getBomResponseDto (@PathVariable Long bomId) {
 //        return new ResponseEntity<>(bomItemService.getBomResponseDto(bomId), HttpStatus.OK);
 //    }
 //

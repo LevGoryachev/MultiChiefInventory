@@ -1,10 +1,8 @@
-package ru.goryachev.multichief.mrp.model.dto;
-
-import javax.persistence.*;
+package ru.goryachev.multichief.mrp.model.dto.common;
 
 /**
  * MaterialCommonDto is an intermediate object of catalogue unit of all materials (for building construction),
- * and it is used for communication between microservices.
+ * and it is used for requests and responses (communication between microservices).
  * @author Lev Goryachev
  * @version 1.1
  */

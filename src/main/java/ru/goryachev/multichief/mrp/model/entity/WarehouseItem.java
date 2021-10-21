@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "bom_item")
 @IdClass(BomItemCompositeKey.class)
-public class BomItem {
+public class WarehouseItem {
 
     @Id
     @ManyToOne
@@ -25,12 +25,12 @@ public class BomItem {
     private Material material;
 
     @Column(name = "bom_qty")
-    private Integer qty;     //interface ItemProjection
+    private Integer bomQty;     //rename to Qty for projection
 
-    public BomItem() {
+    public WarehouseItem() {
     }
 
-    public BomItem(Bom bom, Material material) {
+    public WarehouseItem(Bom bom, Material material) {
         this.bom = bom;
         this.material = material;
     }
@@ -51,12 +51,11 @@ public class BomItem {
         this.material = material;
     }
 
-    //interface ItemProjection
-    public Integer getQty() {
-        return qty;
+    public Integer getBomQty() {
+        return bomQty;
     }
 
-    public void setQty(Integer qty) {
-        this.qty = qty;
+    public void setBomQty(Integer bomQty) {
+        this.bomQty = bomQty;
     }
 }
