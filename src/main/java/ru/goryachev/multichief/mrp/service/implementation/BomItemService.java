@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 
 /**
  * BomItemService gets ItemDto (id and quantity of existing material) and converts to BomItem (entity) for saving in DB;
- * gets BomItem (data from DB) and converts to PreformBomResponseDto (Bill of Materials with items).
+ * provides CRUD for BomItem.
  * @author Lev Goryachev
  * @version 1.1
  */

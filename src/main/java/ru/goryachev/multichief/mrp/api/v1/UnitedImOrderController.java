@@ -22,7 +22,7 @@ public class UnitedImOrderController {
 
     private ImOrderService imOrderService;
     private ImOrderItemService imOrderItemService;
-    PreformImOrderService preformImOrderService;
+    private PreformImOrderService preformImOrderService;
 
     @Autowired
     public UnitedImOrderController(ImOrderService imOrderService, ImOrderItemService imOrderItemService, PreformImOrderService preformImOrderService) {
@@ -53,7 +53,7 @@ public class UnitedImOrderController {
     }
 
     /**
-     * getOrderPreform returns PreformImOrderResponseDto - a preform of order of materials.
+     * getOrderPreform returns PreformImOrderResponseDto (implementation of PreformDto) - a preform of order of materials.
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{imOrderId}")

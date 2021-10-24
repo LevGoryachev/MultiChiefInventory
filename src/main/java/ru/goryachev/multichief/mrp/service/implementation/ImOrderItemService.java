@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
 
 /**
  * ImOrderItemService gets ItemDto (id and quantity of existing material) and converts to ImOrderItem (entity) for saving in DB;
- * gets ImOrderItem (data from DB) and converts to ImOrderResponseDTO (internal material order with items).
+ * provides CRUD for ImOrderItem.
  * @author Lev Goryachev
  * @version 1.1
  */

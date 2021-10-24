@@ -20,7 +20,7 @@ public class UnitedBomController {
 
     private BomService bomService;
     private BomItemService bomItemService;
-    PreformBomService preformBomService;
+    private PreformBomService preformBomService;
 
     @Autowired
     public UnitedBomController(BomService bomService, BomItemService bomItemService, PreformBomService preformBomService) {
@@ -56,7 +56,7 @@ public class UnitedBomController {
     }
 
     /**
-     * getBomPreform returns PreformBomResponseDto - a preform of bill of materials document.
+     * getBomPreform returns PreformBomResponseDto (implementation of PreformDto) - a preform of bill of materials document.
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{bomId}")
