@@ -1,8 +1,7 @@
-package ru.goryachev.multichief.mrp.service;
+package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.mrp.model.dto.PreformImOrderResponseDto;
 import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
 import ru.goryachev.multichief.mrp.model.entity.Bom;
 import ru.goryachev.multichief.mrp.model.entity.ImOrder;
@@ -33,22 +32,6 @@ public class ImOrderItemService {
         this.imOrderRepository = imOrderRepository;
         this.materialRepository = materialRepository;
         this.bomRepository = bomRepository;
-    }
-
-    @Transactional
-    public PreformImOrderResponseDto getImOrderResponseDto (Long imOrderId) {
-
-        ImOrder imOrder = imOrderRepository.findById(imOrderId).get();
-
-        PreformImOrderResponseDto preformImOrderResponseDto = new PreformImOrderResponseDto();
-        preformImOrderResponseDto.setId(imOrderId);
-        preformImOrderResponseDto.setBomId(imOrder.getBomId());
-        preformImOrderResponseDto.setOrderTime(imOrder.getOrderTime());
-        preformImOrderResponseDto.setPosted(imOrder.getPosted());
-        preformImOrderResponseDto.setSent(imOrder.getSent());
-        preformImOrderResponseDto.setStatusExecuted(imOrder.getStatusExecuted());
-        preformImOrderResponseDto.setItems(imOrderItemRepository.findByImOrderId(imOrderId));
-        return preformImOrderResponseDto;
     }
 
     @Transactional

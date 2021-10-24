@@ -1,7 +1,8 @@
-package ru.goryachev.multichief.mrp.service;
+package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.goryachev.multichief.mrp.exception.EmptyListException;
 import ru.goryachev.multichief.mrp.model.entity.Warehouse;
 import ru.goryachev.multichief.mrp.repository.WarehouseRepository;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class WarehouseService {
 
     private WarehouseRepository warehouseRepository;
+    private final String ENTITY_TYPE_NAME = "Warehouse";
 
     @Autowired
     public WarehouseService(WarehouseRepository warehouseRepository) {
@@ -24,7 +26,11 @@ public class WarehouseService {
     }
 
     public List<Warehouse> getAll () {
-        return warehouseRepository.findAll();
+        List<Warehouse> allWarehouses = warehouseRepository.findAll();
+        if (allWarehouses.isEmpty()) {
+            throw new EmptyListException(ENTITY_TYPE_NAME);
+        }
+        return allWarehouses;
     }
 
     public Warehouse create (Warehouse warehouse) {

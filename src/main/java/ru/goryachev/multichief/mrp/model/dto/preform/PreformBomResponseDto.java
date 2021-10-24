@@ -1,17 +1,18 @@
-package ru.goryachev.multichief.mrp.model.dto;
+package ru.goryachev.multichief.mrp.model.dto.preform;
 
+import ru.goryachev.multichief.mrp.model.dto.PreformDto;
 import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
 
 import java.util.List;
 
 /**
- * BomDto is a preform for a presentable document - bill of materials (for certain building construction or object)
+ * PreformBomResponseDto is a preform for a presentable document - bill of materials (for certain building construction or object)
  * contains a head of document and list of materials (items).
  * @author Lev Goryachev
  * @version 1.1
  */
 
-public class PreformBomResponseDto {
+public class PreformBomResponseDto implements PreformDto {
 
     private Long id;
 

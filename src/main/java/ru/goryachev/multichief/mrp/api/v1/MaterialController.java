@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.goryachev.multichief.mrp.exception.ObjectNotFoundException;
 import ru.goryachev.multichief.mrp.model.entity.Material;
-import ru.goryachev.multichief.mrp.service.MaterialService;
+import ru.goryachev.multichief.mrp.service.implementation.MaterialService;
 
 import java.util.List;
 
@@ -26,9 +27,10 @@ public class MaterialController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Material> getById (@PathVariable Long id) {
-        return new ResponseEntity<>(materialService.getById(id), HttpStatus.OK);
+    public ResponseEntity<Material> getById (@PathVariable Long id) throws ObjectNotFoundException {
+            return new ResponseEntity<>(materialService.getById(id), HttpStatus.OK);
     }
+
 
     @PostMapping
     public ResponseEntity<Material> create (@RequestBody Material material) {

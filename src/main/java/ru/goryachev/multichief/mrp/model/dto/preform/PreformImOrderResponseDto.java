@@ -1,5 +1,6 @@
-package ru.goryachev.multichief.mrp.model.dto;
+package ru.goryachev.multichief.mrp.model.dto.preform;
 
+import ru.goryachev.multichief.mrp.model.dto.PreformDto;
 import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
 
 import javax.persistence.Column;
@@ -9,13 +10,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * BomDto is a preform for a presentable document - bill of materials (for certain building construction or object)
+ * PreformImOrderResponseDto is a preform for a presentable document - internal material order (for certain building construction or object)
  * contains a head of document and list of materials (items).
  * @author Lev Goryachev
  * @version 1.1
  */
 
-public class PreformImOrderResponseDto {
+public class PreformImOrderResponseDto implements PreformDto {
 
     private Long id;
 

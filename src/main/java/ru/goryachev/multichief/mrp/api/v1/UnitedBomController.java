@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.goryachev.multichief.mrp.model.dto.PreformBomResponseDto;
+import ru.goryachev.multichief.mrp.model.dto.PreformDto;
 import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
 import ru.goryachev.multichief.mrp.model.entity.Bom;
 import ru.goryachev.multichief.mrp.model.entity.BomItem;
-import ru.goryachev.multichief.mrp.service.BomItemService;
-import ru.goryachev.multichief.mrp.service.BomService;
+import ru.goryachev.multichief.mrp.service.implementation.BomItemService;
+import ru.goryachev.multichief.mrp.service.implementation.BomService;
+import ru.goryachev.multichief.mrp.service.implementation.PreformBomService;
 
 import java.util.List;
 
@@ -19,11 +20,13 @@ public class UnitedBomController {
 
     private BomService bomService;
     private BomItemService bomItemService;
+    PreformBomService preformBomService;
 
     @Autowired
-    public UnitedBomController(BomService bomService, BomItemService bomItemService) {
+    public UnitedBomController(BomService bomService, BomItemService bomItemService, PreformBomService preformBomService) {
         this.bomService = bomService;
         this.bomItemService = bomItemService;
+        this.preformBomService = preformBomService;
     }
 
     @GetMapping
@@ -57,13 +60,13 @@ public class UnitedBomController {
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{bomId}")
-    public ResponseEntity<PreformBomResponseDto> getBomPreform (@PathVariable Long bomId) {
-        return new ResponseEntity<>(bomItemService.getBomResponseDto(bomId), HttpStatus.OK);
+    public ResponseEntity<PreformDto> getPreformBom (@PathVariable Long bomId) {
+        return new ResponseEntity<>(preformBomService.getPreform(bomId), HttpStatus.OK);
     }
 
     @GetMapping("{bomId}/items")
-    public ResponseEntity<PreformBomResponseDto> getAllItems (@PathVariable Long bomId) {
-        return new ResponseEntity<>(bomItemService.getBomResponseDto(bomId), HttpStatus.OK);
+    public ResponseEntity<PreformDto> getAllItems (@PathVariable Long bomId) {
+        return new ResponseEntity<>(preformBomService.getPreform(bomId), HttpStatus.OK);
     }
 
     /*@GetMapping("{bomId}/items")// add @Params and getAllById and may be unit with getAllItems

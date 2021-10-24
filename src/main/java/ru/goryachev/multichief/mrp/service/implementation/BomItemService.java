@@ -1,8 +1,7 @@
-package ru.goryachev.multichief.mrp.service;
+package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.mrp.model.dto.PreformBomResponseDto;
 import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
 import ru.goryachev.multichief.mrp.model.entity.BomItem;
 import ru.goryachev.multichief.mrp.repository.BomItemRepository;
@@ -30,15 +29,6 @@ public class BomItemService {
         this.bomItemRepository = bomItemRepository;
         this.bomRepository = bomRepository;
         this.materialRepository = materialRepository;
-    }
-
-    @Transactional
-    public PreformBomResponseDto getBomResponseDto (Long bomId) {
-        PreformBomResponseDto preformBomResponseDto = new PreformBomResponseDto();
-        preformBomResponseDto.setId(bomId);
-        preformBomResponseDto.setInternalDocNum(bomRepository.findById(bomId).get().getInternalDocNum());
-        preformBomResponseDto.setItems(bomItemRepository.findByBomId(bomId));
-        return preformBomResponseDto;
     }
 
     @Transactional

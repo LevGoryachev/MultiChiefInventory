@@ -5,11 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
-import ru.goryachev.multichief.mrp.model.dto.PreformImOrderResponseDto;
+import ru.goryachev.multichief.mrp.model.dto.PreformDto;
+import ru.goryachev.multichief.mrp.model.dto.preform.PreformImOrderResponseDto;
 import ru.goryachev.multichief.mrp.model.entity.ImOrder;
 import ru.goryachev.multichief.mrp.model.entity.ImOrderItem;
-import ru.goryachev.multichief.mrp.service.ImOrderItemService;
-import ru.goryachev.multichief.mrp.service.ImOrderService;
+import ru.goryachev.multichief.mrp.service.PreformService;
+import ru.goryachev.multichief.mrp.service.implementation.ImOrderItemService;
+import ru.goryachev.multichief.mrp.service.implementation.ImOrderService;
+import ru.goryachev.multichief.mrp.service.implementation.PreformImOrderService;
 
 import java.util.List;
 
@@ -19,11 +22,13 @@ public class UnitedImOrderController {
 
     private ImOrderService imOrderService;
     private ImOrderItemService imOrderItemService;
+    PreformImOrderService preformImOrderService;
 
     @Autowired
-    public UnitedImOrderController(ImOrderService imOrderService, ImOrderItemService imOrderItemService) {
+    public UnitedImOrderController(ImOrderService imOrderService, ImOrderItemService imOrderItemService, PreformImOrderService preformImOrderService) {
         this.imOrderService = imOrderService;
         this.imOrderItemService = imOrderItemService;
+        this.preformImOrderService = preformImOrderService;
     }
 
     @GetMapping
@@ -52,13 +57,13 @@ public class UnitedImOrderController {
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{imOrderId}")
-    public ResponseEntity<PreformImOrderResponseDto> getOrderPreform (@PathVariable Long imOrderId) {
-        return new ResponseEntity<>(imOrderItemService.getImOrderResponseDto(imOrderId), HttpStatus.OK);
+    public ResponseEntity<PreformDto> getPreformImOrder (@PathVariable Long imOrderId) {
+        return new ResponseEntity<>(preformImOrderService.getPreform(imOrderId), HttpStatus.OK);
     }
 
     @GetMapping("{imOrderId}/items")
-    public ResponseEntity<PreformImOrderResponseDto> getAllItems (@PathVariable Long imOrderId) {
-        return new ResponseEntity<>(imOrderItemService.getImOrderResponseDto(imOrderId), HttpStatus.OK);
+    public ResponseEntity<PreformDto> getAllItems (@PathVariable Long imOrderId) {
+        return new ResponseEntity<>(preformImOrderService.getPreform(imOrderId), HttpStatus.OK);
     }
 
     @PostMapping("{imOrderId}/items")

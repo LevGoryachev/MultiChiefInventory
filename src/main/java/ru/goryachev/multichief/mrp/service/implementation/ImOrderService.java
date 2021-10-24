@@ -1,7 +1,8 @@
-package ru.goryachev.multichief.mrp.service;
+package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.goryachev.multichief.mrp.exception.EmptyListException;
 import ru.goryachev.multichief.mrp.model.entity.ImOrder;
 import ru.goryachev.multichief.mrp.repository.ImOrderRepository;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class ImOrderService {
 
     private ImOrderRepository imOrderRepository;
+    private final String ENTITY_TYPE_NAME = "ImOrder";
 
     @Autowired
     public ImOrderService(ImOrderRepository imOrderRepository) {
@@ -24,7 +26,11 @@ public class ImOrderService {
     }
 
     public List<ImOrder> getAll () {
-        return imOrderRepository.findAll();
+        List<ImOrder> allImOrders = imOrderRepository.findAll();
+        if (allImOrders.isEmpty()) {
+            throw new EmptyListException(ENTITY_TYPE_NAME);
+        }
+        return allImOrders;
     }
 
     public ImOrder create (ImOrder imOrder) {
