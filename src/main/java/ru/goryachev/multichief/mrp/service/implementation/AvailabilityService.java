@@ -1,12 +1,19 @@
 package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
+import ru.goryachev.multichief.mrp.exception.EmptyListException;
+import ru.goryachev.multichief.mrp.exception.ObjectNotFoundException;
+import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
+import ru.goryachev.multichief.mrp.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.mrp.model.entity.Availability;
 import ru.goryachev.multichief.mrp.repository.*;
+import ru.goryachev.multichief.mrp.service.SpecialService;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * AvailabilityService gets ItemDto (id and quantity of existing material) and converts to Availability (entity) for saving in DB;
@@ -16,17 +23,36 @@ import javax.transaction.Transactional;
  */
 
 @Service
-public class AvailabilityService {
+@PropertySource("classpath:service_layer.properties")
+public class AvailabilityService implements SpecialService {
 
     private AvailabilityRepository availabilityRepository;
     private WarehouseRepository warehouseRepository;
     private MaterialRepository materialRepository; //look for the cached data (where?)
+    @Value("${model.entity.alias.warehouse}")
+    private String warehouseEntityAlias;
+    @Value("${model.entity.alias.availability}")
+    private String availabilityEntityAlias;
 
     @Autowired
     public AvailabilityService(AvailabilityRepository availabilityRepository, WarehouseRepository warehouseRepository, MaterialRepository materialRepository) {
         this.availabilityRepository = availabilityRepository;
         this.warehouseRepository = warehouseRepository;
         this.materialRepository = materialRepository;
+    }
+
+    public List<ItemProjection> getAllByWarehouseId(Long warehouseId) throws ObjectNotFoundException {
+
+        if (!warehouseRepository.existsById(warehouseId)){
+            throw new ObjectNotFoundException(warehouseEntityAlias, warehouseId);
+        }
+
+        List<ItemProjection> availabilityList = availabilityRepository.findByWarehouseId(warehouseId);
+
+        if (availabilityList.isEmpty()) {
+            throw new EmptyListException(availabilityEntityAlias);
+        }
+        return availabilityList;
     }
 
     @Transactional

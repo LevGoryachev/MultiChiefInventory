@@ -1,6 +1,8 @@
 package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.goryachev.multichief.mrp.exception.EmptyListException;
 import ru.goryachev.multichief.mrp.model.entity.ImOrder;
@@ -15,10 +17,12 @@ import java.util.List;
  */
 
 @Service
+@PropertySource("classpath:service_layer.properties")
 public class ImOrderService {
 
     private ImOrderRepository imOrderRepository;
-    private final String ENTITY_TYPE_NAME = "ImOrder";
+    @Value("${model.entity.alias.imorder}")
+    private String imOrderEntityAlias;
 
     @Autowired
     public ImOrderService(ImOrderRepository imOrderRepository) {
@@ -28,7 +32,7 @@ public class ImOrderService {
     public List<ImOrder> getAll () {
         List<ImOrder> allImOrders = imOrderRepository.findAll();
         if (allImOrders.isEmpty()) {
-            throw new EmptyListException(ENTITY_TYPE_NAME);
+            throw new EmptyListException(imOrderEntityAlias);
         }
         return allImOrders;
     }

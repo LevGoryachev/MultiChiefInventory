@@ -2,7 +2,7 @@ package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.mrp.model.dto.preform.PreformImOrderResponseDto;
+import ru.goryachev.multichief.mrp.model.dto.response.PreformImOrderResponseDto;
 import ru.goryachev.multichief.mrp.model.entity.ImOrder;
 import ru.goryachev.multichief.mrp.repository.ImOrderItemRepository;
 import ru.goryachev.multichief.mrp.repository.ImOrderRepository;

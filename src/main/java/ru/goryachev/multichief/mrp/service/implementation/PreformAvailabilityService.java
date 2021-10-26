@@ -2,11 +2,8 @@ package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.mrp.model.dto.preform.PreformAvailabilityResponseDto;
-import ru.goryachev.multichief.mrp.model.dto.preform.PreformBomResponseDto;
+import ru.goryachev.multichief.mrp.model.dto.response.PreformAvailabilityResponseDto;
 import ru.goryachev.multichief.mrp.repository.AvailabilityRepository;
-import ru.goryachev.multichief.mrp.repository.BomItemRepository;
-import ru.goryachev.multichief.mrp.repository.BomRepository;
 import ru.goryachev.multichief.mrp.repository.WarehouseRepository;
 import ru.goryachev.multichief.mrp.service.PreformService;
 

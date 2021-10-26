@@ -1,6 +1,8 @@
 package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.goryachev.multichief.mrp.exception.EmptyListException;
 import ru.goryachev.multichief.mrp.model.entity.Bom;
@@ -16,10 +18,13 @@ import java.util.List;
  */
 
 @Service
+@PropertySource("classpath:service_layer.properties")
 public class BomService {
 
+
     private BomRepository bomRepository;
-    private final String ENTITY_TYPE_NAME = "Bom";
+    @Value("${model.entity.alias.bom}")
+    private String bomEntityAlias;
 
     @Autowired
     public BomService(BomRepository bomRepository) {
@@ -29,7 +34,7 @@ public class BomService {
     public List<Bom> getAll () {
         List<Bom> allBoms = bomRepository.findAll();
         if (allBoms.isEmpty()) {
-            throw new EmptyListException(ENTITY_TYPE_NAME);
+            throw new EmptyListException(bomEntityAlias);
         }
         return allBoms;
     }

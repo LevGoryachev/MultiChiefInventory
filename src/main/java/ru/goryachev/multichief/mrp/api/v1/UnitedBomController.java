@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.goryachev.multichief.mrp.model.dto.PreformDto;
-import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
+import ru.goryachev.multichief.mrp.model.dto.request.ItemRequestDto;
+import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.mrp.model.entity.Bom;
 import ru.goryachev.multichief.mrp.model.entity.BomItem;
 import ru.goryachev.multichief.mrp.service.implementation.BomItemService;
@@ -65,8 +66,8 @@ public class UnitedBomController {
     }
 
     @GetMapping("{bomId}/items")
-    public ResponseEntity<PreformDto> getAllItems (@PathVariable Long bomId) {
-        return new ResponseEntity<>(preformBomService.getPreform(bomId), HttpStatus.OK);
+    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long bomId) throws Exception {
+        return new ResponseEntity<>(bomItemService.getAllByBomId(bomId), HttpStatus.OK);
     }
 
     /*@GetMapping("{bomId}/items")// add @Params and getAllById and may be unit with getAllItems

@@ -1,11 +1,8 @@
-package ru.goryachev.multichief.mrp.model.dto.preform;
+package ru.goryachev.multichief.mrp.model.dto.response;
 
 import ru.goryachev.multichief.mrp.model.dto.PreformDto;
 import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import java.time.LocalDateTime;
 import java.util.List;
 

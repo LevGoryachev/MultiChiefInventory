@@ -1,6 +1,8 @@
 package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.goryachev.multichief.mrp.exception.ObjectNotFoundException;
 import ru.goryachev.multichief.mrp.exception.EmptyListException;
@@ -16,10 +18,12 @@ import java.util.List;
  */
 
 @Service
+@PropertySource("classpath:service_layer.properties")
 public class MaterialService {
 
     private MaterialRepository materialRepository;
-    private final String ENTITY_TYPE_NAME = "Material";
+    @Value("${model.entity.alias.material}")
+    private String materialEntityAlias;
 
     @Autowired
     public MaterialService(MaterialRepository materialRepository) {
@@ -29,7 +33,7 @@ public class MaterialService {
     public List<Material> getAll () {
         List<Material> allMaterials = materialRepository.findAll();
         if (allMaterials.isEmpty()) {
-            throw new EmptyListException(ENTITY_TYPE_NAME);
+            throw new EmptyListException(materialEntityAlias);
         }
         return allMaterials;
     }
@@ -37,7 +41,7 @@ public class MaterialService {
     //findById: items.stream().findAny().map((e) -> items).orElseThrow(NotFoundException::new);
 
     public Material getById (Long id) throws ObjectNotFoundException {
-        return materialRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(ENTITY_TYPE_NAME, id));
+        return materialRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(materialEntityAlias, id));
     }
 
     public Material create (Material material) {

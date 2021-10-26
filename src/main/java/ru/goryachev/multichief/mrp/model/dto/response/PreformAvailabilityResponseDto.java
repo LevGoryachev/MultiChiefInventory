@@ -1,4 +1,4 @@
-package ru.goryachev.multichief.mrp.model.dto.preform;
+package ru.goryachev.multichief.mrp.model.dto.response;
 
 import ru.goryachev.multichief.mrp.model.dto.PreformDto;
 import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
@@ -6,17 +6,17 @@ import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
 import java.util.List;
 
 /**
- * PreformBomResponseDto is a preform for a presentable document - bill of materials (for certain building construction or object)
+ * PreformAvailabilityResponseDto is a preform for a presentable document - availability of materials in a warehouse (for certain building construction or object)
  * contains a head of document and list of materials (items).
  * @author Lev Goryachev
  * @version 1.1
  */
 
-public class PreformBomResponseDto implements PreformDto {
+public class PreformAvailabilityResponseDto implements PreformDto {
 
     private Long id;
 
-    private Integer internalDocNum;
+    private String whAddress;
 
     private List<ItemProjection> items;
 
@@ -28,12 +28,12 @@ public class PreformBomResponseDto implements PreformDto {
         this.id = id;
     }
 
-    public Integer getInternalDocNum() {
-        return internalDocNum;
+    public String getWhAddress() {
+        return whAddress;
     }
 
-    public void setInternalDocNum(Integer internalDocNum) {
-        this.internalDocNum = internalDocNum;
+    public void setWhAddress(String whAddress) {
+        this.whAddress = whAddress;
     }
 
     public List<ItemProjection> getItems() {

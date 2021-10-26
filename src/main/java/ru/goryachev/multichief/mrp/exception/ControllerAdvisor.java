@@ -28,7 +28,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(EmptyListException.class)
-    public ResponseEntity<Object> handleEmptyListException(EmptyListException ex, WebRequest request) {
+    public ResponseEntity<Object> handleEmptyListException(Exception ex, WebRequest request) {
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("timestamp", LocalDateTime.now());
         responseBody.put("service", appName);

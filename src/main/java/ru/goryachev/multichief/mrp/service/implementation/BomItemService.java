@@ -1,14 +1,21 @@
 package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
+import ru.goryachev.multichief.mrp.exception.EmptyListException;
+import ru.goryachev.multichief.mrp.exception.ObjectNotFoundException;
+import ru.goryachev.multichief.mrp.model.dto.request.ItemRequestDto;
+import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.mrp.model.entity.BomItem;
 import ru.goryachev.multichief.mrp.repository.BomItemRepository;
 import ru.goryachev.multichief.mrp.repository.BomRepository;
 import ru.goryachev.multichief.mrp.repository.MaterialRepository;
+import ru.goryachev.multichief.mrp.service.SpecialService;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * BomItemService gets ItemDto (id and quantity of existing material) and converts to BomItem (entity) for saving in DB;
@@ -18,17 +25,36 @@ import javax.transaction.Transactional;
  */
 
 @Service
-public class BomItemService {
+@PropertySource("classpath:service_layer.properties")
+public class BomItemService implements SpecialService {
 
     private BomItemRepository bomItemRepository;
     private BomRepository bomRepository;
     private MaterialRepository materialRepository; //look for the cached data (where?)
+    @Value("${model.entity.alias.bom}")
+    private String bomEntityAlias;
+    @Value("${model.entity.alias.bomitem}")
+    private String bomitemEntityAlias;
 
     @Autowired
     public BomItemService(BomItemRepository bomItemRepository, BomRepository bomRepository, MaterialRepository materialRepository) {
         this.bomItemRepository = bomItemRepository;
         this.bomRepository = bomRepository;
         this.materialRepository = materialRepository;
+    }
+
+    public List<ItemProjection> getAllByBomId(Long bomId) throws ObjectNotFoundException {
+
+        if (!bomRepository.existsById(bomId)){
+            throw new ObjectNotFoundException(bomEntityAlias, bomId);
+        }
+
+        List<ItemProjection> bomItemList = bomItemRepository.findByBomId(bomId);
+
+        if (bomItemList.isEmpty()) {
+            throw new EmptyListException(bomitemEntityAlias);
+        }
+        return bomItemList;
     }
 
     @Transactional

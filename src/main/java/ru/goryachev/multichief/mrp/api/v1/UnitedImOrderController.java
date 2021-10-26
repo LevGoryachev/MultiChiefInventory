@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
+import ru.goryachev.multichief.mrp.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.mrp.model.dto.PreformDto;
-import ru.goryachev.multichief.mrp.model.dto.preform.PreformImOrderResponseDto;
+import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.mrp.model.entity.ImOrder;
 import ru.goryachev.multichief.mrp.model.entity.ImOrderItem;
-import ru.goryachev.multichief.mrp.service.PreformService;
 import ru.goryachev.multichief.mrp.service.implementation.ImOrderItemService;
 import ru.goryachev.multichief.mrp.service.implementation.ImOrderService;
 import ru.goryachev.multichief.mrp.service.implementation.PreformImOrderService;
@@ -62,8 +61,8 @@ public class UnitedImOrderController {
     }
 
     @GetMapping("{imOrderId}/items")
-    public ResponseEntity<PreformDto> getAllItems (@PathVariable Long imOrderId) {
-        return new ResponseEntity<>(preformImOrderService.getPreform(imOrderId), HttpStatus.OK);
+    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long imOrderId) throws Exception {
+        return new ResponseEntity<>(imOrderItemService.getAllByImOrderId(imOrderId), HttpStatus.OK);
     }
 
     @PostMapping("{imOrderId}/items")

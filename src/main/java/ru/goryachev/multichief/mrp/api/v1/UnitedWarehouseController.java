@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.goryachev.multichief.mrp.model.dto.ItemRequestDto;
+import ru.goryachev.multichief.mrp.exception.ObjectNotFoundException;
+import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
+import ru.goryachev.multichief.mrp.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.mrp.model.dto.PreformDto;
 import ru.goryachev.multichief.mrp.model.entity.Availability;
 import ru.goryachev.multichief.mrp.model.entity.Warehouse;
@@ -58,8 +60,8 @@ public class UnitedWarehouseController {
     }
 
     @GetMapping("{warehouseId}/items")
-    public ResponseEntity<PreformDto> getAllItems (@PathVariable Long warehouseId) {
-        return new ResponseEntity<>(preformAvailabilityService.getPreform(warehouseId), HttpStatus.OK);
+    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long warehouseId) throws Exception {
+        return new ResponseEntity<>(availabilityService.getAllByWarehouseId(warehouseId), HttpStatus.OK);
     }
 
     /*@GetMapping("{bomId}/items")// add @Params and getAllById and may be unit with getAllItems

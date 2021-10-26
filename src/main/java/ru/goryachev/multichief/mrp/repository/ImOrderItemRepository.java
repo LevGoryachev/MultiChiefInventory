@@ -10,9 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ImOrderItemRepository extends JpaRepository <ImOrderItem, Long> {
-
-   void deleteByImOrderIdAndMaterialId(Long bomId, Long materialId);
-
-   List<ItemProjection> findByImOrderId(Long bomId); //using DTO projection materials with quantities (ru.goryachev.multichief.mrp.model.dto.projection)
-
+   void deleteByImOrderIdAndMaterialId(Long imOrderId, Long materialId);
+   List<ItemProjection> findByImOrderId(Long imOrderId); //using DTO projection materials with quantities (ru.goryachev.multichief.mrp.model.dto.projection)
 }

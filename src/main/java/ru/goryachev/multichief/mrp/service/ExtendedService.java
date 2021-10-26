@@ -7,8 +7,10 @@ import ru.goryachev.multichief.mrp.model.dto.CommonDto;
  * @author Lev Goryachev
  * @version 1.1
  */
-public interface StandardService {
+public interface ExtendedService {
     Iterable<CommonDto> getAll();
+    Iterable<CommonDto> getAllById(Iterable<Long> set);
+    CommonDto getById(Long id);
     Iterable<Long> create(Iterable<CommonDto> dtos);
     Iterable<Long> update(Iterable<CommonDto> dtos);
     void delete(Iterable<Long> set);

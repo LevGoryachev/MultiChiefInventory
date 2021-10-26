@@ -1,4 +1,4 @@
-package ru.goryachev.multichief.mrp.model.dto;
+package ru.goryachev.multichief.mrp.model.dto.request;
 
 /**
  * ItemRequestDto is a transfer object for receiving a material item of document (bom (bill of materials) or order or warehouse etc.).
