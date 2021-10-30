@@ -1,5 +1,6 @@
 package ru.goryachev.multichief.mrp.service;
 
+import ru.goryachev.multichief.mrp.exception.ObjectNotFoundException;
 import ru.goryachev.multichief.mrp.model.dto.PreformDto;
 /**
  * PreformService is intended for services that work with PreformDto types (preforms of documents, which can use in other APPs);
@@ -8,5 +9,5 @@ import ru.goryachev.multichief.mrp.model.dto.PreformDto;
  * @version 1.1
  */
 public interface PreformService {
-    PreformDto getPreform (Long id);
+    PreformDto getPreform (Long id) throws Exception;
 }

@@ -1,8 +1,12 @@
 package ru.goryachev.multichief.mrp.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import ru.goryachev.multichief.mrp.exception.ObjectNotFoundException;
 import ru.goryachev.multichief.mrp.model.dto.response.PreformBomResponseDto;
+import ru.goryachev.multichief.mrp.model.entity.Bom;
 import ru.goryachev.multichief.mrp.repository.BomItemRepository;
 import ru.goryachev.multichief.mrp.repository.BomRepository;
 import ru.goryachev.multichief.mrp.service.PreformService;
@@ -16,10 +20,13 @@ import javax.transaction.Transactional;
  */
 
 @Service
+@PropertySource("classpath:service_layer.properties")
 public class PreformBomService implements PreformService {
 
     private BomItemRepository bomItemRepository;
     private BomRepository bomRepository;
+    @Value("${model.entity.alias.bom}")
+    private String bomEntityAlias;
 
     @Autowired
     public PreformBomService(BomItemRepository bomItemRepository, BomRepository bomRepository) {
@@ -29,10 +36,13 @@ public class PreformBomService implements PreformService {
 
     @Override
     @Transactional
-    public PreformBomResponseDto getPreform (Long bomId) {
+    public PreformBomResponseDto getPreform (Long bomId) throws ObjectNotFoundException {
+
+        Bom bom = bomRepository.findById(bomId).orElseThrow(() -> new ObjectNotFoundException(bomEntityAlias, bomId));
+
         PreformBomResponseDto preformBomResponseDto = new PreformBomResponseDto();
         preformBomResponseDto.setId(bomId);
-        preformBomResponseDto.setInternalDocNum(bomRepository.findById(bomId).get().getInternalDocNum());
+        preformBomResponseDto.setInternalDocNum(bom.getInternalDocNum());
         preformBomResponseDto.setItems(bomItemRepository.findByBomId(bomId));
         return preformBomResponseDto;
     }

@@ -56,7 +56,7 @@ public class UnitedImOrderController {
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{imOrderId}")
-    public ResponseEntity<PreformDto> getPreformImOrder (@PathVariable Long imOrderId) {
+    public ResponseEntity<PreformDto> getPreformImOrder (@PathVariable Long imOrderId) throws Exception {
         return new ResponseEntity<>(preformImOrderService.getPreform(imOrderId), HttpStatus.OK);
     }
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.goryachev.multichief.mrp.exception.ObjectNotFoundException;
 import ru.goryachev.multichief.mrp.model.dto.PreformDto;
 import ru.goryachev.multichief.mrp.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.mrp.model.dto.projection.ItemProjection;
@@ -61,7 +62,7 @@ public class UnitedBomController {
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{bomId}")
-    public ResponseEntity<PreformDto> getPreformBom (@PathVariable Long bomId) {
+    public ResponseEntity<PreformDto> getPreformBom (@PathVariable Long bomId) throws Exception {
         return new ResponseEntity<>(preformBomService.getPreform(bomId), HttpStatus.OK);
     }
 
