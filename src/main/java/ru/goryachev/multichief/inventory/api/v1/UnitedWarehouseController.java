@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.goryachev.multichief.inventory.model.dto.common.WarehouseCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
@@ -18,18 +19,18 @@ import java.util.List;
 public class UnitedWarehouseController {
 
     private WarehouseService warehouseService;
-    private AvailabilityService availabilityService;
+    private SpecialAvailabilityService specialAvailabilityService;
     private PreformAvailabilityService preformAvailabilityService;
 
     @Autowired
-    public UnitedWarehouseController(WarehouseService warehouseService, AvailabilityService availabilityService, PreformAvailabilityService preformAvailabilityService) {
+    public UnitedWarehouseController(WarehouseService warehouseService, SpecialAvailabilityService specialAvailabilityService, PreformAvailabilityService preformAvailabilityService) {
         this.warehouseService = warehouseService;
-        this.availabilityService = availabilityService;
+        this.specialAvailabilityService = specialAvailabilityService;
         this.preformAvailabilityService = preformAvailabilityService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Warehouse>> getAll () {
+    public ResponseEntity<List<WarehouseCommonDto>> getAll () {
         return new ResponseEntity<>(warehouseService.getAll(), HttpStatus.OK);
     }
 
@@ -60,7 +61,7 @@ public class UnitedWarehouseController {
 
     @GetMapping("{warehouseId}/items")
     public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long warehouseId) throws Exception {
-        return new ResponseEntity<>(availabilityService.getAllByWarehouseId(warehouseId), HttpStatus.OK);
+        return new ResponseEntity<>(specialAvailabilityService.getAllByWarehouseId(warehouseId), HttpStatus.OK);
     }
 
     /*@GetMapping("{bomId}/items")// add @Params and getAllById and may be unit with getAllItems
@@ -75,17 +76,17 @@ public class UnitedWarehouseController {
 
     @PostMapping("{warehouseId}/items")
     public ResponseEntity<Availability> createItems (@PathVariable Long warehouseId, @RequestBody ItemRequestDto itemRequestDto) {
-        return new ResponseEntity<>(availabilityService.save(warehouseId, itemRequestDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(specialAvailabilityService.save(warehouseId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping("{warehouseId}/items")
     public ResponseEntity<Availability> updateItems (@PathVariable Long warehouseId, @RequestBody ItemRequestDto modifiedItemDto) {
-        return new ResponseEntity<>(availabilityService.save(warehouseId, modifiedItemDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(specialAvailabilityService.save(warehouseId, modifiedItemDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{warehouseId}/items/{materialId}")//remove id and implement deleteAllBy
     public ResponseEntity<Throwable> deleteItems (@PathVariable Long warehouseId, @PathVariable Long materialId) {
-        availabilityService.delete(warehouseId, materialId);
+        specialAvailabilityService.delete(warehouseId, materialId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

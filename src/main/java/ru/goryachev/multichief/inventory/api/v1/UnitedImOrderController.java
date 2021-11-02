@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.goryachev.multichief.inventory.model.dto.common.ImOrderCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.model.entity.ImOrder;
 import ru.goryachev.multichief.inventory.model.entity.ImOrderItem;
-import ru.goryachev.multichief.inventory.service.implementation.ImOrderItemService;
+import ru.goryachev.multichief.inventory.service.implementation.SpecialImOrderItemService;
 import ru.goryachev.multichief.inventory.service.implementation.ImOrderService;
 import ru.goryachev.multichief.inventory.service.implementation.PreformImOrderService;
 
@@ -20,18 +21,18 @@ import java.util.List;
 public class UnitedImOrderController {
 
     private ImOrderService imOrderService;
-    private ImOrderItemService imOrderItemService;
+    private SpecialImOrderItemService specialImOrderItemService;
     private PreformImOrderService preformImOrderService;
 
     @Autowired
-    public UnitedImOrderController(ImOrderService imOrderService, ImOrderItemService imOrderItemService, PreformImOrderService preformImOrderService) {
+    public UnitedImOrderController(ImOrderService imOrderService, SpecialImOrderItemService specialImOrderItemService, PreformImOrderService preformImOrderService) {
         this.imOrderService = imOrderService;
-        this.imOrderItemService = imOrderItemService;
+        this.specialImOrderItemService = specialImOrderItemService;
         this.preformImOrderService = preformImOrderService;
     }
 
     @GetMapping
-    public ResponseEntity<List<ImOrder>> getAll () {
+    public ResponseEntity<List<ImOrderCommonDto>> getAll () {
         return new ResponseEntity<>(imOrderService.getAll(), HttpStatus.OK);
     }
 
@@ -62,22 +63,22 @@ public class UnitedImOrderController {
 
     @GetMapping("{imOrderId}/items")
     public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long imOrderId) throws Exception {
-        return new ResponseEntity<>(imOrderItemService.getAllByImOrderId(imOrderId), HttpStatus.OK);
+        return new ResponseEntity<>(specialImOrderItemService.getAllByImOrderId(imOrderId), HttpStatus.OK);
     }
 
     @PostMapping("{imOrderId}/items")
     public ResponseEntity<ImOrderItem> createItems (@PathVariable Long imOrderId, @RequestBody ItemRequestDto itemRequestDto) {
-        return new ResponseEntity<>(imOrderItemService.save(imOrderId, itemRequestDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(specialImOrderItemService.save(imOrderId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping("{imOrderId}/items")
     public ResponseEntity<ImOrderItem> updateItems (@PathVariable Long imOrderId, @RequestBody ItemRequestDto modifiedItemDto) {
-        return new ResponseEntity<>(imOrderItemService.save(imOrderId, modifiedItemDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(specialImOrderItemService.save(imOrderId, modifiedItemDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{imOrderId}/items/{materialId}")//remove id and implement deleteAllBy
     public ResponseEntity<Throwable> deleteItems (@PathVariable Long imOrderId, @PathVariable Long materialId) {
-        imOrderItemService.delete(imOrderId, materialId);
+        specialImOrderItemService.delete(imOrderId, materialId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -3,6 +3,7 @@ package ru.goryachev.multichief.inventory.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Bom is a bill of materials (for certain building construction), head of the document
@@ -35,5 +36,27 @@ public class Bom {
 
     public void setInternalDocNum(Integer internalDocNum) {
         this.internalDocNum = internalDocNum;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bom)) return false;
+        Bom bom = (Bom) o;
+        return Objects.equals(getId(), bom.getId()) &&
+                Objects.equals(getInternalDocNum(), bom.getInternalDocNum());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getInternalDocNum());
+    }
+
+    @Override
+    public String toString() {
+        return "Bom{" +
+                "id=" + id +
+                ", internalDocNum=" + internalDocNum +
+                '}';
     }
 }

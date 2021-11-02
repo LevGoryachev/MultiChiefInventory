@@ -1,5 +1,7 @@
 package ru.goryachev.multichief.inventory.model.dto.common;
 
+import ru.goryachev.multichief.inventory.model.dto.CommonDto;
+
 /**
  * BomCommonDto is an intermediate object of bill of materials (for certain building construction), head of the document,
  * and it is used for requests and responses (communication between microservices).
@@ -7,8 +9,7 @@ package ru.goryachev.multichief.inventory.model.dto.common;
  * @version 1.1
  */
 
-//@JsonIgnoreProperties({"hibernateLazyInitializer"})
-public class BomCommonDto {
+public class BomCommonDto implements CommonDto {
 
     private Long id;
 

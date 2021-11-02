@@ -19,7 +19,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 /**
- * ImOrderItemService gets ItemDto (id and quantity of existing material) and converts to ImOrderItem (entity) for saving in DB;
+ * SpecialImOrderItemService gets ItemDto (id and quantity of existing material) and converts to ImOrderItem (entity) for saving in DB;
  * provides CRUD for ImOrderItem.
  * @author Lev Goryachev
  * @version 1.1
@@ -27,7 +27,7 @@ import java.util.List;
 
 @Service
 @PropertySource("classpath:service_layer.properties")
-public class ImOrderItemService implements SpecialService {
+public class SpecialImOrderItemService implements SpecialService {
 
     private ImOrderItemRepository imOrderItemRepository;
     private ImOrderRepository imOrderRepository;
@@ -39,7 +39,7 @@ public class ImOrderItemService implements SpecialService {
     private String imOrderItemEntityAlias;
 
     @Autowired
-    public ImOrderItemService(ImOrderItemRepository imOrderItemRepository, ImOrderRepository imOrderRepository, MaterialRepository materialRepository, BomRepository bomRepository) {
+    public SpecialImOrderItemService(ImOrderItemRepository imOrderItemRepository, ImOrderRepository imOrderRepository, MaterialRepository materialRepository, BomRepository bomRepository) {
         this.imOrderItemRepository = imOrderItemRepository;
         this.imOrderRepository = imOrderRepository;
         this.materialRepository = materialRepository;

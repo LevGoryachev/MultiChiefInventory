@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.goryachev.multichief.inventory.exception.ObjectNotFoundException;
+import ru.goryachev.multichief.inventory.model.dto.common.MaterialCommonDto;
 import ru.goryachev.multichief.inventory.model.entity.Material;
 import ru.goryachev.multichief.inventory.service.implementation.MaterialService;
 
@@ -22,12 +23,12 @@ public class MaterialController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Material>> getAllMaterials () {
+    public ResponseEntity<List<MaterialCommonDto>> getAllMaterials () {
         return new ResponseEntity<>(materialService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Material> getById (@PathVariable Long id) throws ObjectNotFoundException {
+    public ResponseEntity<MaterialCommonDto> getById (@PathVariable Long id) throws ObjectNotFoundException {
             return new ResponseEntity<>(materialService.getById(id), HttpStatus.OK);
     }
 

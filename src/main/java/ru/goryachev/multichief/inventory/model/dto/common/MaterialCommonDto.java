@@ -1,5 +1,7 @@
 package ru.goryachev.multichief.inventory.model.dto.common;
 
+import ru.goryachev.multichief.inventory.model.dto.CommonDto;
+
 /**
  * MaterialCommonDto is an intermediate object of catalogue unit of all materials (for building construction),
  * and it is used for requests and responses (communication between microservices).
@@ -8,7 +10,7 @@ package ru.goryachev.multichief.inventory.model.dto.common;
  */
 
 //@JsonIgnoreProperties({"hibernateLazyInitializer"})
-public class MaterialCommonDto {
+public class MaterialCommonDto implements CommonDto {
 
     private Long id;
 

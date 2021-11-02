@@ -5,11 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
+import ru.goryachev.multichief.inventory.model.dto.common.BomCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.model.entity.Bom;
 import ru.goryachev.multichief.inventory.model.entity.BomItem;
-import ru.goryachev.multichief.inventory.service.implementation.BomItemService;
+import ru.goryachev.multichief.inventory.service.implementation.SpecialBomItemService;
 import ru.goryachev.multichief.inventory.service.implementation.BomService;
 import ru.goryachev.multichief.inventory.service.implementation.PreformBomService;
 
@@ -20,18 +21,18 @@ import java.util.List;
 public class UnitedBomController {
 
     private BomService bomService;
-    private BomItemService bomItemService;
+    private SpecialBomItemService specialBomItemService;
     private PreformBomService preformBomService;
 
     @Autowired
-    public UnitedBomController(BomService bomService, BomItemService bomItemService, PreformBomService preformBomService) {
+    public UnitedBomController(BomService bomService, SpecialBomItemService specialBomItemService, PreformBomService preformBomService) {
         this.bomService = bomService;
-        this.bomItemService = bomItemService;
+        this.specialBomItemService = specialBomItemService;
         this.preformBomService = preformBomService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Bom>> getAll () {
+    public ResponseEntity<List<BomCommonDto>> getAll () {
         return new ResponseEntity<>(bomService.getAll(), HttpStatus.OK);
     }
 
@@ -67,7 +68,7 @@ public class UnitedBomController {
 
     @GetMapping("{bomId}/items")
     public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long bomId) throws Exception {
-        return new ResponseEntity<>(bomItemService.getAllByBomId(bomId), HttpStatus.OK);
+        return new ResponseEntity<>(specialBomItemService.getAllByBomId(bomId), HttpStatus.OK);
     }
 
     /*@GetMapping("{bomId}/items")// add @Params and getAllById and may be unit with getAllItems
@@ -82,17 +83,17 @@ public class UnitedBomController {
 
     @PostMapping("{bomId}/items")
     public ResponseEntity<BomItem> createItems (@PathVariable Long bomId, @RequestBody ItemRequestDto itemRequestDto) {
-        return new ResponseEntity<>(bomItemService.save(bomId, itemRequestDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(specialBomItemService.save(bomId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping("{bomId}/items")
     public ResponseEntity<BomItem> updateItems (@PathVariable Long bomId, @RequestBody ItemRequestDto modifiedItemDto) {
-        return new ResponseEntity<>(bomItemService.save(bomId, modifiedItemDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(specialBomItemService.save(bomId, modifiedItemDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{bomId}/items/{materialId}")//remove id and implement deleteAllBy
     public ResponseEntity<Throwable> deleteItems (@PathVariable Long bomId, @PathVariable Long materialId) {
-        bomItemService.delete(bomId, materialId);
+        specialBomItemService.delete(bomId, materialId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

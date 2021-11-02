@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 /**
- * BomItemService gets ItemDto (id and quantity of existing material) and converts to BomItem (entity) for saving in DB;
+ * SpecialBomItemService gets ItemDto (id and quantity of existing material) and converts to BomItem (entity) for saving in DB;
  * provides CRUD for BomItem.
  * @author Lev Goryachev
  * @version 1.1
@@ -26,7 +26,7 @@ import java.util.List;
 
 @Service
 @PropertySource("classpath:service_layer.properties")
-public class BomItemService implements SpecialService {
+public class SpecialBomItemService implements SpecialService {
 
     private BomItemRepository bomItemRepository;
     private BomRepository bomRepository;
@@ -37,7 +37,7 @@ public class BomItemService implements SpecialService {
     private String bomitemEntityAlias;
 
     @Autowired
-    public BomItemService(BomItemRepository bomItemRepository, BomRepository bomRepository, MaterialRepository materialRepository) {
+    public SpecialBomItemService(BomItemRepository bomItemRepository, BomRepository bomRepository, MaterialRepository materialRepository) {
         this.bomItemRepository = bomItemRepository;
         this.bomRepository = bomRepository;
         this.materialRepository = materialRepository;

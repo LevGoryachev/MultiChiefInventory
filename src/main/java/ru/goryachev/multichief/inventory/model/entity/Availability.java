@@ -3,6 +3,7 @@ package ru.goryachev.multichief.inventory.model.entity;
 import ru.goryachev.multichief.inventory.model.entity.key.AvailabilityCompositeKey;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 /**
@@ -58,5 +59,29 @@ public class Availability {
 
     public void setQty(Integer qty) {
         this.qty = qty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Availability)) return false;
+        Availability that = (Availability) o;
+        return Objects.equals(getWarehouse(), that.getWarehouse()) &&
+                Objects.equals(getMaterial(), that.getMaterial()) &&
+                Objects.equals(getQty(), that.getQty());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getWarehouse(), getMaterial(), getQty());
+    }
+
+    @Override
+    public String toString() {
+        return "Availability{" +
+                "warehouse=" + warehouse +
+                ", material=" + material +
+                ", qty=" + qty +
+                '}';
     }
 }

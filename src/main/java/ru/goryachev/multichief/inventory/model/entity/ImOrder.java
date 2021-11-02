@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * ImOrder is an internal material order that refers to items of materials for a construction site (materials are ordered by an employee).
@@ -79,5 +80,35 @@ public class ImOrder {
 
     public void setStatusExecuted(Boolean statusExecuted) {
         this.statusExecuted = statusExecuted;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ImOrder)) return false;
+        ImOrder imOrder = (ImOrder) o;
+        return Objects.equals(getId(), imOrder.getId()) &&
+                Objects.equals(getBomId(), imOrder.getBomId()) &&
+                Objects.equals(getOrderTime(), imOrder.getOrderTime()) &&
+                Objects.equals(getPosted(), imOrder.getPosted()) &&
+                Objects.equals(getSent(), imOrder.getSent()) &&
+                Objects.equals(getStatusExecuted(), imOrder.getStatusExecuted());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getBomId(), getOrderTime(), getPosted(), getSent(), getStatusExecuted());
+    }
+
+    @Override
+    public String toString() {
+        return "ImOrder{" +
+                "id=" + id +
+                ", bomId=" + bomId +
+                ", orderTime=" + orderTime +
+                ", posted=" + posted +
+                ", sent=" + sent +
+                ", statusExecuted=" + statusExecuted +
+                '}';
     }
 }

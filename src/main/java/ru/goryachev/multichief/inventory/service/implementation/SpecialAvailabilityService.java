@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 /**
- * AvailabilityService gets ItemDto (id and quantity of existing material) and converts to Availability (entity) for saving in DB;
+ * SpecialAvailabilityService gets ItemDto (id and quantity of existing material) and converts to Availability (entity) for saving in DB;
  * provides CRUD for Availability.
  * @author Lev Goryachev
  * @version 1.1
@@ -24,7 +24,7 @@ import java.util.List;
 
 @Service
 @PropertySource("classpath:service_layer.properties")
-public class AvailabilityService implements SpecialService {
+public class SpecialAvailabilityService implements SpecialService {
 
     private AvailabilityRepository availabilityRepository;
     private WarehouseRepository warehouseRepository;
@@ -35,7 +35,7 @@ public class AvailabilityService implements SpecialService {
     private String availabilityEntityAlias;
 
     @Autowired
-    public AvailabilityService(AvailabilityRepository availabilityRepository, WarehouseRepository warehouseRepository, MaterialRepository materialRepository) {
+    public SpecialAvailabilityService(AvailabilityRepository availabilityRepository, WarehouseRepository warehouseRepository, MaterialRepository materialRepository) {
         this.availabilityRepository = availabilityRepository;
         this.warehouseRepository = warehouseRepository;
         this.materialRepository = materialRepository;

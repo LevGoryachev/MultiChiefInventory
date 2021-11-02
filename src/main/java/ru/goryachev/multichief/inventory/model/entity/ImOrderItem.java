@@ -3,6 +3,7 @@ package ru.goryachev.multichief.inventory.model.entity;
 import ru.goryachev.multichief.inventory.model.entity.key.ImOrderItemCompositeKey;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 /**
@@ -82,5 +83,33 @@ public class ImOrderItem {
 
     public void setQty(Integer qty) {
         this.qty = qty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ImOrderItem)) return false;
+        ImOrderItem that = (ImOrderItem) o;
+        return Objects.equals(getBom(), that.getBom()) &&
+                Objects.equals(getMaterial(), that.getMaterial()) &&
+                Objects.equals(getImOrder(), that.getImOrder()) &&
+                Objects.equals(getStatusDelivered(), that.getStatusDelivered()) &&
+                Objects.equals(getQty(), that.getQty());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBom(), getMaterial(), getImOrder(), getStatusDelivered(), getQty());
+    }
+
+    @Override
+    public String toString() {
+        return "ImOrderItem{" +
+                "bom=" + bom +
+                ", material=" + material +
+                ", imOrder=" + imOrder +
+                ", statusDelivered=" + statusDelivered +
+                ", qty=" + qty +
+                '}';
     }
 }

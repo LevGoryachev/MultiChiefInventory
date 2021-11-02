@@ -5,10 +5,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.goryachev.multichief.inventory.exception.EmptyListException;
+import ru.goryachev.multichief.inventory.model.dto.common.WarehouseCommonDto;
 import ru.goryachev.multichief.inventory.model.entity.Warehouse;
 import ru.goryachev.multichief.inventory.repository.WarehouseRepository;
+import ru.goryachev.multichief.inventory.service.converter.WarehouseConverter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * WarehouseService works with Warehouse (entities and DTOs)
@@ -21,20 +24,23 @@ import java.util.List;
 public class WarehouseService {
 
     private WarehouseRepository warehouseRepository;
+    private WarehouseConverter warehouseConverter;
+
     @Value("${model.entity.alias.warehouse}")
     private String warehouseEntityAlias;
 
     @Autowired
-    public WarehouseService(WarehouseRepository warehouseRepository) {
+    public WarehouseService(WarehouseRepository warehouseRepository, WarehouseConverter warehouseConverter) {
         this.warehouseRepository = warehouseRepository;
+        this.warehouseConverter = warehouseConverter;
     }
 
-    public List<Warehouse> getAll () {
+    public List<WarehouseCommonDto> getAll () {
         List<Warehouse> allWarehouses = warehouseRepository.findAll();
         if (allWarehouses.isEmpty()) {
             throw new EmptyListException(warehouseEntityAlias);
         }
-        return allWarehouses;
+        return allWarehouses.stream().map(warehouseConverter::entityToDto).collect(Collectors.toList());
     }
 
     public Warehouse create (Warehouse warehouse) {

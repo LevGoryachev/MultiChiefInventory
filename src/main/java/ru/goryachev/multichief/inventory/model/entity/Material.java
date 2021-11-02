@@ -3,6 +3,7 @@ package ru.goryachev.multichief.inventory.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Material - catalogue unit of all materials (for building construction)
@@ -68,5 +69,33 @@ public class Material {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Material)) return false;
+        Material material = (Material) o;
+        return Objects.equals(getId(), material.getId()) &&
+                Objects.equals(getName(), material.getName()) &&
+                Objects.equals(getUm(), material.getUm()) &&
+                Objects.equals(getUnitWeightKg(), material.getUnitWeightKg()) &&
+                Objects.equals(getNotes(), material.getNotes());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getUm(), getUnitWeightKg(), getNotes());
+    }
+
+    @Override
+    public String toString() {
+        return "Material{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", um='" + um + '\'' +
+                ", unitWeightKg=" + unitWeightKg +
+                ", notes='" + notes + '\'' +
+                '}';
     }
 }
