@@ -1,4 +1,4 @@
--- MultiChiefMRP, version 1.2, syntax: Postgres
+-- MultiChiefInventory, version 1.2, syntax: Postgres
 
 CREATE TABLE "warehouse"(
 id BIGSERIAL PRIMARY KEY,

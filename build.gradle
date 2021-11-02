@@ -20,5 +20,5 @@ dependencies {
 }
 
 war {
-    archiveName 'MultiChiefMRP.war'
+    archiveName 'MultiChiefInventory.war'
 }
