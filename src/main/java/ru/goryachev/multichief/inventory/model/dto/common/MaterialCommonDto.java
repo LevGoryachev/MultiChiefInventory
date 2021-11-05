@@ -2,6 +2,9 @@ package ru.goryachev.multichief.inventory.model.dto.common;
 
 import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 
+import javax.validation.constraints.*;
+
+
 /**
  * MaterialCommonDto is an intermediate object of catalogue unit of all materials (for building construction),
  * and it is used for requests and responses (communication between microservices).
@@ -9,15 +12,22 @@ import ru.goryachev.multichief.inventory.model.dto.CommonDto;
  * @version 1.1
  */
 
-//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class MaterialCommonDto implements CommonDto {
 
     private Long id;
 
+    @NotBlank
+    @Size(min=2, max=80)
+    @Pattern(regexp = "(\\S+\\s?\\S+)+", message = "must match: 'word/space/word/space/word...etc'; must not start or finish with space")
     private String name;
 
+    @NotBlank
+    @Size(min=1, max=25)
     private String um;
 
+    @NotNull
+    @Min(1)
+    @Max(1000000)
     private Integer unitWeightKg;
 
     private String notes;

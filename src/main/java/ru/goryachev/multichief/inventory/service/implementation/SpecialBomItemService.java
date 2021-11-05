@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.inventory.exception.EmptyListException;
-import ru.goryachev.multichief.inventory.exception.ObjectNotFoundException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.model.entity.BomItem;
@@ -43,16 +43,16 @@ public class SpecialBomItemService implements SpecialService {
         this.materialRepository = materialRepository;
     }
 
-    public List<ItemProjection> getAllByBomId(Long bomId) throws ObjectNotFoundException {
+    public List<ItemProjection> getAllByBomId(Long bomId) throws MultiChiefObjectNotFoundException, MultiChiefEmptyListException {
 
         if (!bomRepository.existsById(bomId)){
-            throw new ObjectNotFoundException(bomEntityAlias, bomId);
+            throw new MultiChiefObjectNotFoundException(bomEntityAlias, bomId);
         }
 
         List<ItemProjection> bomItemList = bomItemRepository.findByBomId(bomId);
 
         if (bomItemList.isEmpty()) {
-            throw new EmptyListException(bomitemEntityAlias);
+            throw new MultiChiefEmptyListException(bomitemEntityAlias);
         }
         return bomItemList;
     }

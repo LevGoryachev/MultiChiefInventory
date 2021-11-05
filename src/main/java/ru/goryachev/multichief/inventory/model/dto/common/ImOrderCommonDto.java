@@ -1,5 +1,8 @@
 package ru.goryachev.multichief.inventory.model.dto.common;
 
+import ru.goryachev.multichief.inventory.model.dto.CommonDto;
+
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -9,10 +12,11 @@ import java.time.LocalDateTime;
  * @version 1.1
  */
 
-public class ImOrderCommonDto {
+public class ImOrderCommonDto implements CommonDto {
 
     private Long id;
 
+    @NotNull
     private Long bomId;
 
     private LocalDateTime orderTime;

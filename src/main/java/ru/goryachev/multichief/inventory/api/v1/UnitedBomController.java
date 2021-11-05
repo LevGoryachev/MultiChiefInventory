@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
 import ru.goryachev.multichief.inventory.model.dto.common.BomCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
@@ -14,7 +16,9 @@ import ru.goryachev.multichief.inventory.service.implementation.SpecialBomItemSe
 import ru.goryachev.multichief.inventory.service.implementation.BomService;
 import ru.goryachev.multichief.inventory.service.implementation.PreformBomService;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/boms")
@@ -32,7 +36,7 @@ public class UnitedBomController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BomCommonDto>> getAll () {
+    public ResponseEntity<List<BomCommonDto>> getAll () throws MultiChiefEmptyListException {
         return new ResponseEntity<>(bomService.getAll(), HttpStatus.OK);
     }
 
@@ -42,8 +46,8 @@ public class UnitedBomController {
     }*/
 
     @PostMapping
-    public ResponseEntity<Bom> createBoms (@RequestBody Bom bom) {
-        return new ResponseEntity<>(bomService.create(bom), HttpStatus.CREATED);
+    public ResponseEntity<Object> createBoms (@RequestBody @Valid BomCommonDto bomCommonDto) {
+        return new ResponseEntity<>(bomService.create(bomCommonDto), HttpStatus.CREATED);
     }
 
     @PutMapping
@@ -62,12 +66,12 @@ public class UnitedBomController {
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{bomId}")
-    public ResponseEntity<PreformDto> getPreformBom (@PathVariable Long bomId) throws Exception {
+    public ResponseEntity<PreformDto> getPreformBom (@PathVariable Long bomId) throws MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(preformBomService.getPreform(bomId), HttpStatus.OK);
     }
 
     @GetMapping("{bomId}/items")
-    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long bomId) throws Exception {
+    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long bomId) throws MultiChiefEmptyListException, MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(specialBomItemService.getAllByBomId(bomId), HttpStatus.OK);
     }
 

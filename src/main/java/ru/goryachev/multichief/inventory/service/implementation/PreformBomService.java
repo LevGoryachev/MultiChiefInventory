@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.inventory.exception.ObjectNotFoundException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.response.PreformBomResponseDto;
 import ru.goryachev.multichief.inventory.model.entity.Bom;
 import ru.goryachev.multichief.inventory.repository.BomItemRepository;
@@ -36,9 +36,9 @@ public class PreformBomService implements PreformService {
 
     @Override
     @Transactional
-    public PreformBomResponseDto getPreform (Long bomId) throws ObjectNotFoundException {
+    public PreformBomResponseDto getPreform (Long bomId) throws MultiChiefObjectNotFoundException {
 
-        Bom bom = bomRepository.findById(bomId).orElseThrow(() -> new ObjectNotFoundException(bomEntityAlias, bomId));
+        Bom bom = bomRepository.findById(bomId).orElseThrow(() -> new MultiChiefObjectNotFoundException(bomEntityAlias, bomId));
 
         PreformBomResponseDto preformBomResponseDto = new PreformBomResponseDto();
         preformBomResponseDto.setId(bomId);

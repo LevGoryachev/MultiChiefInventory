@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.common.ImOrderCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
@@ -14,6 +16,7 @@ import ru.goryachev.multichief.inventory.service.implementation.SpecialImOrderIt
 import ru.goryachev.multichief.inventory.service.implementation.ImOrderService;
 import ru.goryachev.multichief.inventory.service.implementation.PreformImOrderService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,13 +35,13 @@ public class UnitedImOrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ImOrderCommonDto>> getAll () {
+    public ResponseEntity<List<ImOrderCommonDto>> getAll () throws MultiChiefEmptyListException {
         return new ResponseEntity<>(imOrderService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ImOrder> create (@RequestBody ImOrder imOrder) {
-        return new ResponseEntity<>(imOrderService.create(imOrder), HttpStatus.CREATED);
+    public ResponseEntity<Object> create (@RequestBody @Valid ImOrderCommonDto imOrderCommonDto) throws MultiChiefObjectNotFoundException {
+        return new ResponseEntity<>(imOrderService.create(imOrderCommonDto), HttpStatus.CREATED);
     }
 
     @PutMapping
@@ -57,12 +60,12 @@ public class UnitedImOrderController {
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{imOrderId}")
-    public ResponseEntity<PreformDto> getPreformImOrder (@PathVariable Long imOrderId) throws Exception {
+    public ResponseEntity<PreformDto> getPreformImOrder (@PathVariable Long imOrderId) throws MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(preformImOrderService.getPreform(imOrderId), HttpStatus.OK);
     }
 
     @GetMapping("{imOrderId}/items")
-    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long imOrderId) throws Exception {
+    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long imOrderId) throws MultiChiefEmptyListException, MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(specialImOrderItemService.getAllByImOrderId(imOrderId), HttpStatus.OK);
     }
 

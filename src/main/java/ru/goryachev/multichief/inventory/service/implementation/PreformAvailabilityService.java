@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.inventory.exception.ObjectNotFoundException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.response.PreformWarehouseResponseDto;
 import ru.goryachev.multichief.inventory.model.entity.Warehouse;
 import ru.goryachev.multichief.inventory.repository.AvailabilityRepository;
@@ -37,9 +37,9 @@ public class PreformAvailabilityService implements PreformService {
 
     @Override
     @Transactional
-    public PreformWarehouseResponseDto getPreform (Long warehouseId) throws ObjectNotFoundException {
+    public PreformWarehouseResponseDto getPreform (Long warehouseId) throws MultiChiefObjectNotFoundException {
 
-        Warehouse warehouse = warehouseRepository.findById(warehouseId).orElseThrow(() -> new ObjectNotFoundException(warehouseEntityAlias, warehouseId));
+        Warehouse warehouse = warehouseRepository.findById(warehouseId).orElseThrow(() -> new MultiChiefObjectNotFoundException(warehouseEntityAlias, warehouseId));
 
         PreformWarehouseResponseDto preformWarehouseResponseDto = new PreformWarehouseResponseDto();
         preformWarehouseResponseDto.setId(warehouseId);

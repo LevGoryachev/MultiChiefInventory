@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.inventory.exception.EmptyListException;
-import ru.goryachev.multichief.inventory.exception.ObjectNotFoundException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.entity.Availability;
@@ -41,16 +41,16 @@ public class SpecialAvailabilityService implements SpecialService {
         this.materialRepository = materialRepository;
     }
 
-    public List<ItemProjection> getAllByWarehouseId(Long warehouseId) throws ObjectNotFoundException {
+    public List<ItemProjection> getAllByWarehouseId(Long warehouseId) throws MultiChiefObjectNotFoundException, MultiChiefEmptyListException {
 
         if (!warehouseRepository.existsById(warehouseId)){
-            throw new ObjectNotFoundException(warehouseEntityAlias, warehouseId);
+            throw new MultiChiefObjectNotFoundException(warehouseEntityAlias, warehouseId);
         }
 
         List<ItemProjection> availabilityList = availabilityRepository.findByWarehouseId(warehouseId);
 
         if (availabilityList.isEmpty()) {
-            throw new EmptyListException(availabilityEntityAlias);
+            throw new MultiChiefEmptyListException(availabilityEntityAlias);
         }
         return availabilityList;
     }

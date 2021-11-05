@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.inventory.exception.EmptyListException;
-import ru.goryachev.multichief.inventory.exception.ObjectNotFoundException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.model.entity.Bom;
@@ -46,16 +46,16 @@ public class SpecialImOrderItemService implements SpecialService {
         this.bomRepository = bomRepository;
     }
 
-    public List<ItemProjection> getAllByImOrderId(Long imOrderId) throws ObjectNotFoundException {
+    public List<ItemProjection> getAllByImOrderId(Long imOrderId) throws MultiChiefObjectNotFoundException, MultiChiefEmptyListException {
 
         if (!imOrderRepository.existsById(imOrderId)){
-            throw new ObjectNotFoundException(imOrderEntityAlias, imOrderId);
+            throw new MultiChiefObjectNotFoundException(imOrderEntityAlias, imOrderId);
         }
 
         List<ItemProjection> imOrderItemList = imOrderItemRepository.findByImOrderId(imOrderId);
 
         if (imOrderItemList.isEmpty()) {
-            throw new EmptyListException(imOrderItemEntityAlias);
+            throw new MultiChiefEmptyListException(imOrderItemEntityAlias);
         }
         return imOrderItemList;
     }

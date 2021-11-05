@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.inventory.exception.EmptyListException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.model.dto.common.BomCommonDto;
 import ru.goryachev.multichief.inventory.model.entity.Bom;
+import ru.goryachev.multichief.inventory.model.entity.Material;
 import ru.goryachev.multichief.inventory.repository.BomRepository;
 import ru.goryachev.multichief.inventory.service.converter.BomConverter;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -35,16 +38,23 @@ public class BomService {
         this.bomConverter = bomConverter;
     }
 
-    public List<BomCommonDto> getAll () {
+    public List<BomCommonDto> getAll () throws MultiChiefEmptyListException {
         List<Bom> allBoms = bomRepository.findAll();
         if (allBoms.isEmpty()) {
-            throw new EmptyListException(bomEntityAlias);
+            throw new MultiChiefEmptyListException(bomEntityAlias);
         }
         return allBoms.stream().map(bomConverter::entityToDto).collect(Collectors.toList());
     }
 
-    public Bom create (Bom bom) {
-        return bomRepository.save(bom);
+    public Map<String, Object> create (BomCommonDto bomCommonDto) {
+        Bom bom = bomConverter.dtoToEntity(bomCommonDto);
+
+        Bom savedBom = bomRepository.save(bom);
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", bomEntityAlias +" " + "was saved in DB");
+        responseBody.put("id", savedBom.getId());
+        responseBody.put("internal document number", savedBom.getInternalDocNum());
+        return responseBody;
     }
 
     public Bom update (Bom modifiedBom) {

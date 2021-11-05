@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.inventory.exception.ObjectNotFoundException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.response.PreformImOrderResponseDto;
 import ru.goryachev.multichief.inventory.model.entity.ImOrder;
 import ru.goryachev.multichief.inventory.repository.ImOrderItemRepository;
@@ -36,9 +36,9 @@ public class PreformImOrderService implements PreformService {
 
     @Override
     @Transactional
-    public PreformImOrderResponseDto getPreform (Long imOrderId) throws ObjectNotFoundException {
+    public PreformImOrderResponseDto getPreform (Long imOrderId) throws MultiChiefObjectNotFoundException {
 
-        ImOrder imOrder = imOrderRepository.findById(imOrderId).orElseThrow(() -> new ObjectNotFoundException(imOrderEntityAlias, imOrderId));
+        ImOrder imOrder = imOrderRepository.findById(imOrderId).orElseThrow(() -> new MultiChiefObjectNotFoundException(imOrderEntityAlias, imOrderId));
 
         PreformImOrderResponseDto preformImOrderResponseDto = new PreformImOrderResponseDto();
         preformImOrderResponseDto.setId(imOrderId);

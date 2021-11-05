@@ -4,13 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import ru.goryachev.multichief.inventory.exception.EmptyListException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
+import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.common.ImOrderCommonDto;
 import ru.goryachev.multichief.inventory.model.entity.ImOrder;
+import ru.goryachev.multichief.inventory.model.entity.Material;
+import ru.goryachev.multichief.inventory.repository.BomRepository;
 import ru.goryachev.multichief.inventory.repository.ImOrderRepository;
 import ru.goryachev.multichief.inventory.service.converter.ImOrderConverter;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -24,27 +29,41 @@ import java.util.stream.Collectors;
 public class ImOrderService {
 
     private ImOrderRepository imOrderRepository;
+    private BomRepository bomRepository;
     private ImOrderConverter imOrderConverter;
 
     @Value("${model.entity.alias.imorder}")
     private String imOrderEntityAlias;
+    @Value("${model.entity.alias.bom}")
+    private String bomEntityAlias;
 
     @Autowired
-    public ImOrderService(ImOrderRepository imOrderRepository, ImOrderConverter imOrderConverter) {
+    public ImOrderService(ImOrderRepository imOrderRepository, BomRepository bomRepository, ImOrderConverter imOrderConverter) {
         this.imOrderRepository = imOrderRepository;
+        this.bomRepository = bomRepository;
         this.imOrderConverter = imOrderConverter;
     }
 
-    public List<ImOrderCommonDto> getAll () {
+    public List<ImOrderCommonDto> getAll () throws MultiChiefEmptyListException {
         List<ImOrder> allImOrders = imOrderRepository.findAll();
         if (allImOrders.isEmpty()) {
-            throw new EmptyListException(imOrderEntityAlias);
+            throw new MultiChiefEmptyListException(imOrderEntityAlias);
         }
         return allImOrders.stream().map(imOrderConverter::entityToDto).collect(Collectors.toList());
     }
 
-    public ImOrder create (ImOrder imOrder) {
-        return imOrderRepository.save(imOrder);
+    public Map<String, Object> create (ImOrderCommonDto imOrderCommonDto) throws MultiChiefObjectNotFoundException {
+        if(!bomRepository.existsById(imOrderCommonDto.getBomId())){
+            throw new MultiChiefObjectNotFoundException(bomEntityAlias, imOrderCommonDto.getBomId());
+        }
+        ImOrder imOrder = imOrderConverter.dtoToEntity(imOrderCommonDto);
+
+        ImOrder savedimOrder = imOrderRepository.save(imOrder);
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", imOrderEntityAlias +" " + "was saved in DB");
+        responseBody.put("id", savedimOrder.getId());
+        responseBody.put("order time", savedimOrder.getOrderTime());
+        return responseBody;
     }
 
     public ImOrder update (ImOrder modifiedImOrder) {
