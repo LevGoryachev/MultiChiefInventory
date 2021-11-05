@@ -70,12 +70,12 @@ public class UnitedImOrderController {
     }
 
     @PostMapping("{imOrderId}/items")
-    public ResponseEntity<ImOrderItem> createItems (@PathVariable Long imOrderId, @RequestBody ItemRequestDto itemRequestDto) {
+    public ResponseEntity<Object> createItems (@PathVariable Long imOrderId, @RequestBody ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(specialImOrderItemService.save(imOrderId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping("{imOrderId}/items")
-    public ResponseEntity<ImOrderItem> updateItems (@PathVariable Long imOrderId, @RequestBody ItemRequestDto modifiedItemDto) {
+    public ResponseEntity<Object> updateItems (@PathVariable Long imOrderId, @RequestBody ItemRequestDto modifiedItemDto) throws MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(specialImOrderItemService.save(imOrderId, modifiedItemDto), HttpStatus.CREATED);
     }
 

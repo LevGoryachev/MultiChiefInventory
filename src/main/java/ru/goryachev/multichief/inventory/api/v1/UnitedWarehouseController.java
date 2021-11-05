@@ -10,7 +10,6 @@ import ru.goryachev.multichief.inventory.model.dto.common.WarehouseCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
-import ru.goryachev.multichief.inventory.model.entity.Availability;
 import ru.goryachev.multichief.inventory.model.entity.Warehouse;
 import ru.goryachev.multichief.inventory.service.implementation.*;
 
@@ -78,12 +77,12 @@ public class UnitedWarehouseController {
     }*/
 
     @PostMapping("{warehouseId}/items")
-    public ResponseEntity<Availability> createItems (@PathVariable Long warehouseId, @RequestBody ItemRequestDto itemRequestDto) {
+    public ResponseEntity<Object> createItems (@PathVariable Long warehouseId, @RequestBody ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(specialAvailabilityService.save(warehouseId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping("{warehouseId}/items")
-    public ResponseEntity<Availability> updateItems (@PathVariable Long warehouseId, @RequestBody ItemRequestDto modifiedItemDto) {
+    public ResponseEntity<Object> updateItems (@PathVariable Long warehouseId, @RequestBody ItemRequestDto modifiedItemDto) throws MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(specialAvailabilityService.save(warehouseId, modifiedItemDto), HttpStatus.CREATED);
     }
 

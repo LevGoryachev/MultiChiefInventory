@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.model.dto.common.BomCommonDto;
 import ru.goryachev.multichief.inventory.model.entity.Bom;
-import ru.goryachev.multichief.inventory.model.entity.Material;
 import ru.goryachev.multichief.inventory.repository.BomRepository;
 import ru.goryachev.multichief.inventory.service.converter.BomConverter;
 

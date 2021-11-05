@@ -16,7 +16,9 @@ import ru.goryachev.multichief.inventory.repository.*;
 import ru.goryachev.multichief.inventory.service.SpecialService;
 
 import javax.transaction.Transactional;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * SpecialImOrderItemService gets ItemDto (id and quantity of existing material) and converts to ImOrderItem (entity) for saving in DB;
@@ -37,6 +39,8 @@ public class SpecialImOrderItemService implements SpecialService {
     private String imOrderEntityAlias;
     @Value("${model.entity.alias.imorderitem}")
     private String imOrderItemEntityAlias;
+    @Value("${model.entity.alias.material}")
+    private String materialEntityAlias;
 
     @Autowired
     public SpecialImOrderItemService(ImOrderItemRepository imOrderItemRepository, ImOrderRepository imOrderRepository, MaterialRepository materialRepository, BomRepository bomRepository) {
@@ -61,15 +65,20 @@ public class SpecialImOrderItemService implements SpecialService {
     }
 
     @Transactional
-    public ImOrderItem save (Long imOrderId, ItemRequestDto itemRequestDto) {
+    public Map<String, Object> save (Long imOrderId, ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
 
-        ImOrder imOrder = imOrderRepository.getOne(imOrderId);
+        ImOrder imOrder = imOrderRepository.findById(imOrderId).orElseThrow(() -> new MultiChiefObjectNotFoundException(imOrderEntityAlias, imOrderId));
         Bom bom = bomRepository.getOne(imOrder.getBomId());
-        Material material = materialRepository.getOne(itemRequestDto.getMaterialId());
+        Material material = materialRepository.findById(itemRequestDto.getMaterialId()).orElseThrow(() -> new MultiChiefObjectNotFoundException(materialEntityAlias, itemRequestDto.getMaterialId()));
+        ImOrderItem imOrderItem = new ImOrderItem(bom, material, imOrder, itemRequestDto.getQty());
 
-        ImOrderItem imOrderItem = new ImOrderItem(bom, material, imOrder);
-        imOrderItem.setQty(itemRequestDto.getQty());
-        return imOrderItemRepository.save(imOrderItem);
+        ImOrderItem savedImOrderItem = imOrderItemRepository.save(imOrderItem);
+
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", imOrderItemEntityAlias +" " + "was saved in DB");
+        responseBody.put("material", savedImOrderItem.getMaterial().getName());
+        responseBody.put("quantity", savedImOrderItem.getQty());
+        return responseBody;
     }
 
     @Transactional

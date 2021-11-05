@@ -86,12 +86,12 @@ public class UnitedBomController {
     }*/
 
     @PostMapping("{bomId}/items")
-    public ResponseEntity<BomItem> createItems (@PathVariable Long bomId, @RequestBody ItemRequestDto itemRequestDto) {
+    public ResponseEntity<Object> createItems (@PathVariable Long bomId, @RequestBody @Valid ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(specialBomItemService.save(bomId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping("{bomId}/items")
-    public ResponseEntity<BomItem> updateItems (@PathVariable Long bomId, @RequestBody ItemRequestDto modifiedItemDto) {
+    public ResponseEntity<Object> updateItems (@PathVariable Long bomId, @RequestBody @Valid ItemRequestDto modifiedItemDto) throws MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(specialBomItemService.save(bomId, modifiedItemDto), HttpStatus.CREATED);
     }
 

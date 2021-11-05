@@ -38,10 +38,11 @@ public class ImOrderItem {
     public ImOrderItem() {
     }
 
-    public ImOrderItem(Bom bom, Material material, ImOrder imOrder) {
+    public ImOrderItem(Bom bom, Material material, ImOrder imOrder, Integer qty) {
         this.bom = bom;
         this.material = material;
         this.imOrder = imOrder;
+        this.qty = qty;
     }
 
     public Bom getBom() {

@@ -31,9 +31,10 @@ public class BomItem {
     public BomItem() {
     }
 
-    public BomItem(Bom bom, Material material) {
+    public BomItem(Bom bom, Material material, Integer qty) {
         this.bom = bom;
         this.material = material;
+        this.qty = qty;
     }
 
     public Bom getBom() {

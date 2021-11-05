@@ -8,12 +8,14 @@ import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
-import ru.goryachev.multichief.inventory.model.entity.Availability;
+import ru.goryachev.multichief.inventory.model.entity.*;
 import ru.goryachev.multichief.inventory.repository.*;
 import ru.goryachev.multichief.inventory.service.SpecialService;
 
 import javax.transaction.Transactional;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * SpecialAvailabilityService gets ItemDto (id and quantity of existing material) and converts to Availability (entity) for saving in DB;
@@ -33,6 +35,8 @@ public class SpecialAvailabilityService implements SpecialService {
     private String warehouseEntityAlias;
     @Value("${model.entity.alias.availability}")
     private String availabilityEntityAlias;
+    @Value("${model.entity.alias.material}")
+    private String materialEntityAlias;
 
     @Autowired
     public SpecialAvailabilityService(AvailabilityRepository availabilityRepository, WarehouseRepository warehouseRepository, MaterialRepository materialRepository) {
@@ -56,10 +60,23 @@ public class SpecialAvailabilityService implements SpecialService {
     }
 
     @Transactional
-    public Availability save (Long warehouseId, ItemRequestDto itemRequestDto) {
-        Availability availability = new Availability(warehouseRepository.getOne(warehouseId), materialRepository.getOne(itemRequestDto.getMaterialId()));
+    public Map<String, Object> save (Long warehouseId, ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
+        Warehouse warehouse = warehouseRepository.findById(warehouseId).orElseThrow(() -> new MultiChiefObjectNotFoundException(warehouseEntityAlias, warehouseId));
+        Material material = materialRepository.findById(itemRequestDto.getMaterialId()).orElseThrow(() -> new MultiChiefObjectNotFoundException(materialEntityAlias, itemRequestDto.getMaterialId()));
+        Availability availability = new Availability(warehouse, material, itemRequestDto.getQty());
+
+        Availability savedAvailability = availabilityRepository.save(availability);
+
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", availabilityEntityAlias +" " + "was saved in DB");
+        responseBody.put("material", savedAvailability.getMaterial().getName());
+        responseBody.put("quantity", savedAvailability.getQty());
+        return responseBody;
+
+
+        /*Availability availability = new Availability(warehouseRepository.getOne(warehouseId), materialRepository.getOne(itemRequestDto.getMaterialId()));
         availability.setQty(itemRequestDto.getQty());
-        return availabilityRepository.save(availability);
+        return availabilityRepository.save(availability);*/
     }
 
     @Transactional

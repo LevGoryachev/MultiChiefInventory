@@ -8,14 +8,18 @@ import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
+import ru.goryachev.multichief.inventory.model.entity.Bom;
 import ru.goryachev.multichief.inventory.model.entity.BomItem;
+import ru.goryachev.multichief.inventory.model.entity.Material;
 import ru.goryachev.multichief.inventory.repository.BomItemRepository;
 import ru.goryachev.multichief.inventory.repository.BomRepository;
 import ru.goryachev.multichief.inventory.repository.MaterialRepository;
 import ru.goryachev.multichief.inventory.service.SpecialService;
 
 import javax.transaction.Transactional;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * SpecialBomItemService gets ItemDto (id and quantity of existing material) and converts to BomItem (entity) for saving in DB;
@@ -35,6 +39,8 @@ public class SpecialBomItemService implements SpecialService {
     private String bomEntityAlias;
     @Value("${model.entity.alias.bomitem}")
     private String bomitemEntityAlias;
+    @Value("${model.entity.alias.material}")
+    private String materialEntityAlias;
 
     @Autowired
     public SpecialBomItemService(BomItemRepository bomItemRepository, BomRepository bomRepository, MaterialRepository materialRepository) {
@@ -58,10 +64,18 @@ public class SpecialBomItemService implements SpecialService {
     }
 
     @Transactional
-    public BomItem save (Long bomId, ItemRequestDto itemRequestDto) {
-        BomItem bomItem = new BomItem(bomRepository.getOne(bomId), materialRepository.getOne(itemRequestDto.getMaterialId()));
-        bomItem.setQty(itemRequestDto.getQty());
-        return bomItemRepository.save(bomItem);
+    public Map<String, Object> save (Long bomId, ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
+        Bom bom = bomRepository.findById(bomId).orElseThrow(() -> new MultiChiefObjectNotFoundException(bomEntityAlias, bomId));
+        Material material = materialRepository.findById(itemRequestDto.getMaterialId()).orElseThrow(() -> new MultiChiefObjectNotFoundException(materialEntityAlias, itemRequestDto.getMaterialId()));
+        BomItem bomItem = new BomItem(bom, material, itemRequestDto.getQty());
+
+        BomItem savedBomItem = bomItemRepository.save(bomItem);
+
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", bomitemEntityAlias +" " + "was saved in DB");
+        responseBody.put("material", savedBomItem.getMaterial().getName());
+        responseBody.put("quantity", savedBomItem.getQty());
+        return responseBody;
     }
 
     @Transactional

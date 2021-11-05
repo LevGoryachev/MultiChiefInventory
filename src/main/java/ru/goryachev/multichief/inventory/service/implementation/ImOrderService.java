@@ -8,7 +8,6 @@ import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.common.ImOrderCommonDto;
 import ru.goryachev.multichief.inventory.model.entity.ImOrder;
-import ru.goryachev.multichief.inventory.model.entity.Material;
 import ru.goryachev.multichief.inventory.repository.BomRepository;
 import ru.goryachev.multichief.inventory.repository.ImOrderRepository;
 import ru.goryachev.multichief.inventory.service.converter.ImOrderConverter;

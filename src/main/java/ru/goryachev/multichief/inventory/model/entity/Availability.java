@@ -31,9 +31,10 @@ public class Availability {
     public Availability() {
     }
 
-    public Availability(Warehouse warehouse, Material material) {
+    public Availability(Warehouse warehouse, Material material, Integer qty) {
         this.warehouse = warehouse;
         this.material = material;
+        this.qty = qty;
     }
 
     public Warehouse getWarehouse() {
