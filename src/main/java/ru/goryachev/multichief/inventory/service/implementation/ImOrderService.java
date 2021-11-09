@@ -6,10 +6,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
+import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 import ru.goryachev.multichief.inventory.model.dto.common.ImOrderCommonDto;
 import ru.goryachev.multichief.inventory.model.entity.ImOrder;
 import ru.goryachev.multichief.inventory.repository.BomRepository;
 import ru.goryachev.multichief.inventory.repository.ImOrderRepository;
+import ru.goryachev.multichief.inventory.service.StandardService;
 import ru.goryachev.multichief.inventory.service.converter.ImOrderConverter;
 
 import java.util.LinkedHashMap;
@@ -25,7 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 @PropertySource("classpath:service_layer.properties")
-public class ImOrderService {
+public class ImOrderService implements StandardService {
 
     private ImOrderRepository imOrderRepository;
     private BomRepository bomRepository;
@@ -43,7 +45,8 @@ public class ImOrderService {
         this.imOrderConverter = imOrderConverter;
     }
 
-    public List<ImOrderCommonDto> getAll () throws MultiChiefEmptyListException {
+    @Override
+    public List<CommonDto> getAll () throws MultiChiefEmptyListException {
         List<ImOrder> allImOrders = imOrderRepository.findAll();
         if (allImOrders.isEmpty()) {
             throw new MultiChiefEmptyListException(imOrderEntityAlias);
@@ -51,26 +54,41 @@ public class ImOrderService {
         return allImOrders.stream().map(imOrderConverter::entityToDto).collect(Collectors.toList());
     }
 
-    public Map<String, Object> create (ImOrderCommonDto imOrderCommonDto) throws MultiChiefObjectNotFoundException {
-        if(!bomRepository.existsById(imOrderCommonDto.getBomId())){
-            throw new MultiChiefObjectNotFoundException(bomEntityAlias, imOrderCommonDto.getBomId());
+    @Override
+    public Map<String, Object> create (CommonDto imOrderCommonDto) throws MultiChiefObjectNotFoundException {
+        if(!bomRepository.existsById(((ImOrderCommonDto)imOrderCommonDto).getBomId())){
+            throw new MultiChiefObjectNotFoundException(bomEntityAlias, ((ImOrderCommonDto)imOrderCommonDto).getBomId());
         }
-        ImOrder imOrder = imOrderConverter.dtoToEntity(imOrderCommonDto);
+        ImOrder imOrder = (ImOrder) imOrderConverter.dtoToEntity(imOrderCommonDto);
 
         ImOrder savedimOrder = imOrderRepository.save(imOrder);
         Map<String, Object> responseBody = new LinkedHashMap<>();
-        responseBody.put("result", imOrderEntityAlias +" " + "was saved in DB");
+        responseBody.put("result", imOrderEntityAlias + " " + "was saved in DB");
         responseBody.put("id", savedimOrder.getId());
         responseBody.put("order time", savedimOrder.getOrderTime());
         return responseBody;
     }
 
-    public ImOrder update (ImOrder modifiedImOrder) {
-        return imOrderRepository.save(modifiedImOrder);
+    @Override
+    public Map<String, Object> update (CommonDto modifiedImOrder) throws MultiChiefObjectNotFoundException {
+        if(!bomRepository.existsById(((ImOrderCommonDto)modifiedImOrder).getBomId())){
+            throw new MultiChiefObjectNotFoundException(bomEntityAlias, ((ImOrderCommonDto)modifiedImOrder).getBomId());
+        }
+        ImOrder imOrder = (ImOrder) imOrderConverter.dtoToEntity(modifiedImOrder);
+
+        ImOrder savedimOrder = imOrderRepository.save(imOrder);
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", imOrderEntityAlias + " " + "was updated");
+        responseBody.put("id", savedimOrder.getId());
+        responseBody.put("order time", savedimOrder.getOrderTime());
+        return responseBody;
     }
 
-    public void delete (Long id) {
+    @Override
+    public Map<String, Object> delete (Long id) {
         imOrderRepository.deleteById(id);
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", imOrderEntityAlias + " " + "with id" + " " + id + " " + "was deleted");
+        return responseBody;
     }
-
 }

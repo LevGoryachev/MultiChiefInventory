@@ -6,12 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
+import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 import ru.goryachev.multichief.inventory.model.dto.common.ImOrderCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
-import ru.goryachev.multichief.inventory.model.entity.ImOrder;
-import ru.goryachev.multichief.inventory.model.entity.ImOrderItem;
 import ru.goryachev.multichief.inventory.service.implementation.SpecialImOrderItemService;
 import ru.goryachev.multichief.inventory.service.implementation.ImOrderService;
 import ru.goryachev.multichief.inventory.service.implementation.PreformImOrderService;
@@ -35,7 +34,7 @@ public class UnitedImOrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ImOrderCommonDto>> getAll () throws MultiChiefEmptyListException {
+    public ResponseEntity<List<CommonDto>> getAll () throws MultiChiefEmptyListException {
         return new ResponseEntity<>(imOrderService.getAll(), HttpStatus.OK);
     }
 
@@ -45,14 +44,13 @@ public class UnitedImOrderController {
     }
 
     @PutMapping
-    public ResponseEntity<ImOrder> update (@RequestBody ImOrder modifiedImOrder) {
+    public ResponseEntity<Object> update (@RequestBody @Valid ImOrderCommonDto modifiedImOrder) throws MultiChiefObjectNotFoundException {
         return new ResponseEntity<>(imOrderService.update(modifiedImOrder), HttpStatus.OK);
     }
 
     @DeleteMapping("{imOrderId}")//remove id and implement deleteAllBy
-    public ResponseEntity<Throwable> delete (@PathVariable Long imOrderId) {
-        imOrderService.delete(imOrderId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Object> delete (@PathVariable Long imOrderId) {
+        return new ResponseEntity<>(imOrderService.delete(imOrderId), HttpStatus.OK);
     }
 
     /**

@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
+import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 import ru.goryachev.multichief.inventory.model.dto.common.WarehouseCommonDto;
 import ru.goryachev.multichief.inventory.model.entity.Material;
 import ru.goryachev.multichief.inventory.model.entity.Warehouse;
 import ru.goryachev.multichief.inventory.repository.WarehouseRepository;
+import ru.goryachev.multichief.inventory.service.StandardService;
 import ru.goryachev.multichief.inventory.service.converter.WarehouseConverter;
 
 import java.util.LinkedHashMap;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 @PropertySource("classpath:service_layer.properties")
-public class WarehouseService {
+public class WarehouseService implements StandardService {
 
     private WarehouseRepository warehouseRepository;
     private WarehouseConverter warehouseConverter;
@@ -38,7 +40,8 @@ public class WarehouseService {
         this.warehouseConverter = warehouseConverter;
     }
 
-    public List<WarehouseCommonDto> getAll () throws MultiChiefEmptyListException {
+    @Override
+    public List<CommonDto> getAll () throws MultiChiefEmptyListException {
         List<Warehouse> allWarehouses = warehouseRepository.findAll();
         if (allWarehouses.isEmpty()) {
             throw new MultiChiefEmptyListException(warehouseEntityAlias);
@@ -46,23 +49,36 @@ public class WarehouseService {
         return allWarehouses.stream().map(warehouseConverter::entityToDto).collect(Collectors.toList());
     }
 
-    public Map<String, Object> create (WarehouseCommonDto warehouseCommonDto) {
-        Warehouse warehouse = warehouseConverter.dtoToEntity(warehouseCommonDto);
+    @Override
+    public Map<String, Object> create (CommonDto warehouseCommonDto) {
+        Warehouse warehouse = (Warehouse) warehouseConverter.dtoToEntity(warehouseCommonDto);
 
         Warehouse savedWarehouse = warehouseRepository.save(warehouse);
         Map<String, Object> responseBody = new LinkedHashMap<>();
-        responseBody.put("result", warehouseEntityAlias +" " + "was saved in DB");
+        responseBody.put("result", warehouseEntityAlias + " " + "was saved in DB");
         responseBody.put("id", savedWarehouse.getId());
         responseBody.put("address", savedWarehouse.getWhAddress());
         return responseBody;
     }
 
-    public Warehouse update (Warehouse modifiedWarehouse) {
-        return warehouseRepository.save(modifiedWarehouse);
+    @Override
+    public Map<String, Object> update (CommonDto modifiedWarehouse) {
+        Warehouse warehouse = (Warehouse) warehouseConverter.dtoToEntity(modifiedWarehouse);
+
+        Warehouse savedWarehouse = warehouseRepository.save(warehouse);
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", warehouseEntityAlias + " " + "was updated");
+        responseBody.put("id", savedWarehouse.getId());
+        responseBody.put("address", savedWarehouse.getWhAddress());
+        return responseBody;
     }
 
-    public void delete (Long id) {
+    @Override
+    public Map<String, Object> delete (Long id) {
         warehouseRepository.deleteById(id);
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("result", warehouseEntityAlias + " " + "with id" + " " + id + " " + "was deleted");
+        return responseBody;
     }
 
 }

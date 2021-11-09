@@ -8,8 +8,8 @@ import ru.goryachev.multichief.inventory.model.dto.CommonDto;
  * @version 1.1
  */
 public interface StandardService {
-    Iterable<CommonDto> getAll();
-    Iterable<Long> create(Iterable<CommonDto> dtos);
-    Iterable<Long> update(Iterable<CommonDto> dtos);
-    void delete(Iterable<Long> set);
+    Iterable<CommonDto> getAll() throws Exception;
+    Object create(CommonDto dto) throws Exception;
+    Object update(CommonDto dto) throws Exception;
+    Object delete(Long id) throws Exception;
 }

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
+import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 import ru.goryachev.multichief.inventory.model.dto.common.WarehouseCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
@@ -32,7 +33,7 @@ public class UnitedWarehouseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<WarehouseCommonDto>> getAll () throws MultiChiefEmptyListException {
+    public ResponseEntity<List<CommonDto>> getAll () throws MultiChiefEmptyListException {
         return new ResponseEntity<>(warehouseService.getAll(), HttpStatus.OK);
     }
 
@@ -42,14 +43,13 @@ public class UnitedWarehouseController {
     }
 
     @PutMapping
-    public ResponseEntity<Warehouse> update (@RequestBody Warehouse modifiedWarehouse) {
+    public ResponseEntity<Object> update (@RequestBody @Valid WarehouseCommonDto modifiedWarehouse) {
         return new ResponseEntity<>(warehouseService.update(modifiedWarehouse), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Throwable> delete (@PathVariable Long id) {
-        warehouseService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Object> delete (@PathVariable Long id) {
+        return new ResponseEntity<>(warehouseService.delete(id), HttpStatus.OK);
     }
 
     /**

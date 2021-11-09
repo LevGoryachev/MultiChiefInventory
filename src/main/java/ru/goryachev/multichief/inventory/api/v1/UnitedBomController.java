@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
+import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
 import ru.goryachev.multichief.inventory.model.dto.common.BomCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
@@ -36,7 +37,7 @@ public class UnitedBomController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BomCommonDto>> getAll () throws MultiChiefEmptyListException {
+    public ResponseEntity<List<CommonDto>> getAll () throws MultiChiefEmptyListException {
         return new ResponseEntity<>(bomService.getAll(), HttpStatus.OK);
     }
 
@@ -51,14 +52,13 @@ public class UnitedBomController {
     }
 
     @PutMapping
-    public ResponseEntity<Bom> updateBoms (@RequestBody Bom modifiedBom) {
+    public ResponseEntity<Object> updateBoms (@RequestBody @Valid BomCommonDto modifiedBom) {
         return new ResponseEntity<>(bomService.update(modifiedBom), HttpStatus.OK);
     }
 
     @DeleteMapping("{bomId}")//remove id and implement deleteAllBy
-    public ResponseEntity<Throwable> deleteBoms (@PathVariable Long bomId) {
-        bomService.delete(bomId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Object> deleteBoms (@PathVariable Long bomId) {
+        return new ResponseEntity<>(bomService.delete(bomId), HttpStatus.OK);
     }
 
     /**

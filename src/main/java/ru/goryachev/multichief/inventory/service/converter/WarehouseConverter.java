@@ -2,6 +2,7 @@ package ru.goryachev.multichief.inventory.service.converter;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 import ru.goryachev.multichief.inventory.model.dto.common.BomCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.common.WarehouseCommonDto;
 import ru.goryachev.multichief.inventory.model.entity.Bom;
@@ -14,18 +15,20 @@ import ru.goryachev.multichief.inventory.model.entity.Warehouse;
  */
 
 @Component
-public class WarehouseConverter {
+public class WarehouseConverter implements Converter {
     private ModelMapper modelMapper;
 
       public WarehouseConverter() {
             this.modelMapper = new ModelMapper();
       }
 
-    public WarehouseCommonDto entityToDto (Warehouse warehouse){
+    @Override
+    public CommonDto entityToDto (Object warehouse){
           return modelMapper.map(warehouse, WarehouseCommonDto.class);
     }
 
-    public Warehouse dtoToEntity (WarehouseCommonDto warehouseCommonDto) {
+    @Override
+    public Object dtoToEntity (CommonDto warehouseCommonDto) {
           return modelMapper.map(warehouseCommonDto, Warehouse.class);
     }
 
