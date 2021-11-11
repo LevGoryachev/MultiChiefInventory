@@ -11,34 +11,31 @@ import ru.goryachev.multichief.inventory.model.dto.PreformDto;
 import ru.goryachev.multichief.inventory.model.dto.common.BomCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
-import ru.goryachev.multichief.inventory.model.entity.Bom;
-import ru.goryachev.multichief.inventory.model.entity.BomItem;
 import ru.goryachev.multichief.inventory.service.implementation.SpecialBomItemService;
-import ru.goryachev.multichief.inventory.service.implementation.BomService;
+import ru.goryachev.multichief.inventory.service.implementation.StandardBomService;
 import ru.goryachev.multichief.inventory.service.implementation.PreformBomService;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/boms")
 public class UnitedBomController {
 
-    private BomService bomService;
+    private StandardBomService standardBomService;
     private SpecialBomItemService specialBomItemService;
     private PreformBomService preformBomService;
 
     @Autowired
-    public UnitedBomController(BomService bomService, SpecialBomItemService specialBomItemService, PreformBomService preformBomService) {
-        this.bomService = bomService;
+    public UnitedBomController(StandardBomService standardBomService, SpecialBomItemService specialBomItemService, PreformBomService preformBomService) {
+        this.standardBomService = standardBomService;
         this.specialBomItemService = specialBomItemService;
         this.preformBomService = preformBomService;
     }
 
     @GetMapping
     public ResponseEntity<List<CommonDto>> getAll () throws MultiChiefEmptyListException {
-        return new ResponseEntity<>(bomService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(standardBomService.getAll(), HttpStatus.OK);
     }
 
    /* @GetMapping // add @Params and getAllById and may be unit with getAllItems
@@ -48,17 +45,17 @@ public class UnitedBomController {
 
     @PostMapping
     public ResponseEntity<Object> createBoms (@RequestBody @Valid BomCommonDto bomCommonDto) {
-        return new ResponseEntity<>(bomService.create(bomCommonDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(standardBomService.create(bomCommonDto), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<Object> updateBoms (@RequestBody @Valid BomCommonDto modifiedBom) {
-        return new ResponseEntity<>(bomService.update(modifiedBom), HttpStatus.OK);
+        return new ResponseEntity<>(standardBomService.update(modifiedBom), HttpStatus.OK);
     }
 
     @DeleteMapping("{bomId}")//remove id and implement deleteAllBy
     public ResponseEntity<Object> deleteBoms (@PathVariable Long bomId) {
-        return new ResponseEntity<>(bomService.delete(bomId), HttpStatus.OK);
+        return new ResponseEntity<>(standardBomService.delete(bomId), HttpStatus.OK);
     }
 
     /**

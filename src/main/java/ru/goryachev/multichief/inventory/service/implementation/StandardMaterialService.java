@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.model.dto.CommonDto;
-import ru.goryachev.multichief.inventory.model.dto.common.MaterialCommonDto;
 import ru.goryachev.multichief.inventory.model.entity.Material;
 import ru.goryachev.multichief.inventory.repository.MaterialRepository;
 import ru.goryachev.multichief.inventory.service.StandardService;
@@ -19,14 +18,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * MaterialService works with types: MaterialCommonDto, Material
+ * StandardMaterialService works with types: MaterialCommonDto, Material
  * @author Lev Goryachev
  * @version 1.1
  */
 
 @Service
 @PropertySource("classpath:service_layer.properties")
-public class MaterialService implements StandardService {
+public class StandardMaterialService implements StandardService {
 
     private MaterialRepository materialRepository;
     private MaterialConverter materialConverter;
@@ -35,7 +34,7 @@ public class MaterialService implements StandardService {
     private String materialEntityAlias;
 
     @Autowired
-    public MaterialService(MaterialRepository materialRepository, MaterialConverter materialConverter) {
+    public StandardMaterialService(MaterialRepository materialRepository, MaterialConverter materialConverter) {
         this.materialRepository = materialRepository;
         this.materialConverter = materialConverter;
     }

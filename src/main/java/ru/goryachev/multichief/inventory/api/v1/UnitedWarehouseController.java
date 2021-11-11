@@ -11,7 +11,6 @@ import ru.goryachev.multichief.inventory.model.dto.common.WarehouseCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
-import ru.goryachev.multichief.inventory.model.entity.Warehouse;
 import ru.goryachev.multichief.inventory.service.implementation.*;
 
 import javax.validation.Valid;
@@ -21,35 +20,35 @@ import java.util.List;
 @RequestMapping("/api/v1/warehouses")
 public class UnitedWarehouseController {
 
-    private WarehouseService warehouseService;
+    private StandardWarehouseService standardWarehouseService;
     private SpecialAvailabilityService specialAvailabilityService;
     private PreformAvailabilityService preformAvailabilityService;
 
     @Autowired
-    public UnitedWarehouseController(WarehouseService warehouseService, SpecialAvailabilityService specialAvailabilityService, PreformAvailabilityService preformAvailabilityService) {
-        this.warehouseService = warehouseService;
+    public UnitedWarehouseController(StandardWarehouseService standardWarehouseService, SpecialAvailabilityService specialAvailabilityService, PreformAvailabilityService preformAvailabilityService) {
+        this.standardWarehouseService = standardWarehouseService;
         this.specialAvailabilityService = specialAvailabilityService;
         this.preformAvailabilityService = preformAvailabilityService;
     }
 
     @GetMapping
     public ResponseEntity<List<CommonDto>> getAll () throws MultiChiefEmptyListException {
-        return new ResponseEntity<>(warehouseService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(standardWarehouseService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Object> create (@RequestBody @Valid WarehouseCommonDto warehouseCommonDto) {
-        return new ResponseEntity<>(warehouseService.create(warehouseCommonDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(standardWarehouseService.create(warehouseCommonDto), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<Object> update (@RequestBody @Valid WarehouseCommonDto modifiedWarehouse) {
-        return new ResponseEntity<>(warehouseService.update(modifiedWarehouse), HttpStatus.OK);
+        return new ResponseEntity<>(standardWarehouseService.update(modifiedWarehouse), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Object> delete (@PathVariable Long id) {
-        return new ResponseEntity<>(warehouseService.delete(id), HttpStatus.OK);
+        return new ResponseEntity<>(standardWarehouseService.delete(id), HttpStatus.OK);
     }
 
     /**

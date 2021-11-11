@@ -17,14 +17,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * BomService works with Bom (Bill of material entities and DTOs)
+ * StandardBomService works with Bom (Bill of material entities and DTOs)
  * @author Lev Goryachev
  * @version 1.1
  */
 
 @Service
 @PropertySource("classpath:service_layer.properties")
-public class BomService implements StandardService {
+public class StandardBomService implements StandardService {
 
     private BomRepository bomRepository;
     private BomConverter bomConverter;
@@ -33,7 +33,7 @@ public class BomService implements StandardService {
     private String bomEntityAlias;
 
     @Autowired
-    public BomService(BomRepository bomRepository, BomConverter bomConverter) {
+    public StandardBomService(BomRepository bomRepository, BomConverter bomConverter) {
         this.bomRepository = bomRepository;
         this.bomConverter = bomConverter;
     }

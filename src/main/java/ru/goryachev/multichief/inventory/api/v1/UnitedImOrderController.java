@@ -12,7 +12,7 @@ import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 import ru.goryachev.multichief.inventory.service.implementation.SpecialImOrderItemService;
-import ru.goryachev.multichief.inventory.service.implementation.ImOrderService;
+import ru.goryachev.multichief.inventory.service.implementation.StandardImOrderService;
 import ru.goryachev.multichief.inventory.service.implementation.PreformImOrderService;
 
 import javax.validation.Valid;
@@ -22,35 +22,35 @@ import java.util.List;
 @RequestMapping("/api/v1/orders")
 public class UnitedImOrderController {
 
-    private ImOrderService imOrderService;
+    private StandardImOrderService standardImOrderService;
     private SpecialImOrderItemService specialImOrderItemService;
     private PreformImOrderService preformImOrderService;
 
     @Autowired
-    public UnitedImOrderController(ImOrderService imOrderService, SpecialImOrderItemService specialImOrderItemService, PreformImOrderService preformImOrderService) {
-        this.imOrderService = imOrderService;
+    public UnitedImOrderController(StandardImOrderService standardImOrderService, SpecialImOrderItemService specialImOrderItemService, PreformImOrderService preformImOrderService) {
+        this.standardImOrderService = standardImOrderService;
         this.specialImOrderItemService = specialImOrderItemService;
         this.preformImOrderService = preformImOrderService;
     }
 
     @GetMapping
     public ResponseEntity<List<CommonDto>> getAll () throws MultiChiefEmptyListException {
-        return new ResponseEntity<>(imOrderService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(standardImOrderService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Object> create (@RequestBody @Valid ImOrderCommonDto imOrderCommonDto) throws MultiChiefObjectNotFoundException {
-        return new ResponseEntity<>(imOrderService.create(imOrderCommonDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(standardImOrderService.create(imOrderCommonDto), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<Object> update (@RequestBody @Valid ImOrderCommonDto modifiedImOrder) throws MultiChiefObjectNotFoundException {
-        return new ResponseEntity<>(imOrderService.update(modifiedImOrder), HttpStatus.OK);
+        return new ResponseEntity<>(standardImOrderService.update(modifiedImOrder), HttpStatus.OK);
     }
 
     @DeleteMapping("{imOrderId}")//remove id and implement deleteAllBy
     public ResponseEntity<Object> delete (@PathVariable Long imOrderId) {
-        return new ResponseEntity<>(imOrderService.delete(imOrderId), HttpStatus.OK);
+        return new ResponseEntity<>(standardImOrderService.delete(imOrderId), HttpStatus.OK);
     }
 
     /**

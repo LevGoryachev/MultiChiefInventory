@@ -19,14 +19,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * WarehouseService works with Warehouse (entities and DTOs)
+ * StandardWarehouseService works with Warehouse (entities and DTOs)
  * @author Lev Goryachev
  * @version 1.1
  */
 
 @Service
 @PropertySource("classpath:service_layer.properties")
-public class WarehouseService implements StandardService {
+public class StandardWarehouseService implements StandardService {
 
     private WarehouseRepository warehouseRepository;
     private WarehouseConverter warehouseConverter;
@@ -35,7 +35,7 @@ public class WarehouseService implements StandardService {
     private String warehouseEntityAlias;
 
     @Autowired
-    public WarehouseService(WarehouseRepository warehouseRepository, WarehouseConverter warehouseConverter) {
+    public StandardWarehouseService(WarehouseRepository warehouseRepository, WarehouseConverter warehouseConverter) {
         this.warehouseRepository = warehouseRepository;
         this.warehouseConverter = warehouseConverter;
     }

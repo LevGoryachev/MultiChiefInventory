@@ -11,15 +11,17 @@
 
 <h3>Database scheme</h3>
 
-![MultiChiefInventory_DB_v1_1](https://user-images.githubusercontent.com/61917893/134813791-eff22c25-8e58-47b9-ae89-4bcde96800f2.jpg)
+![MultiChiefInventory_DB_v1_3](https://user-images.githubusercontent.com/61917893/140859298-2dbf4725-b494-4ee0-b5f3-3c88ef9254ef.jpg)
 
 
 <p>Descriptions:</p>
 
 <ul>
-<li>bomOld - bill of materials</li>
+<li>bom - bill of materials</li>
 <li>im_order - internal material imOrder</li>
-<li>qty - quantity (warehouse_qty, bom_qty, order_qty)</li>
+<li>qty - quantity (warehouse_qty, bom_qty, im_order_qty)</li>
+<li>primary key (bom_id, id) could be optional if it were not necessary to relate im order with construction
+(as the busines rules provide that bom belongs to only one construction)</li>
 </ul>
 
 <p>MultiChief (ERP). License: GNU GPL v3. Copyright (C) 2021 Lev Goryachev.</p>

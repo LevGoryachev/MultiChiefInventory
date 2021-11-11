@@ -20,14 +20,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * ImOrderService (internal material order service) works with ImOrder (entities and DTOs)
+ * StandardImOrderService (internal material order service) works with ImOrder (entities and DTOs)
  * @author Lev Goryachev
  * @version 1.1
  */
 
 @Service
 @PropertySource("classpath:service_layer.properties")
-public class ImOrderService implements StandardService {
+public class StandardImOrderService implements StandardService {
 
     private ImOrderRepository imOrderRepository;
     private BomRepository bomRepository;
@@ -39,7 +39,7 @@ public class ImOrderService implements StandardService {
     private String bomEntityAlias;
 
     @Autowired
-    public ImOrderService(ImOrderRepository imOrderRepository, BomRepository bomRepository, ImOrderConverter imOrderConverter) {
+    public StandardImOrderService(ImOrderRepository imOrderRepository, BomRepository bomRepository, ImOrderConverter imOrderConverter) {
         this.imOrderRepository = imOrderRepository;
         this.bomRepository = bomRepository;
         this.imOrderConverter = imOrderConverter;
