@@ -4,9 +4,26 @@
 <p><b>Summary: Java 11, Spring-Boot, Spring Security, Spring Data JPA (Hibernate)</b></p>
 <p><b>Database: PostgreSQL</b></p>
 
+
+
+<h3>Architecture</h3>
+<p>Customized microservice-based domain-driven architecture.<p/>
+<p><b>MultiChiefInventory</b> is responsible for a certain functions of domain Inventory (CRUD operations of subdomains, preparing special DTOs)
+and does not interact with both other microservices and business-consumer-services.</p>
+
+![MultiChiefInventoryDiagram](https://user-images.githubusercontent.com/61917893/141861463-67b93f3e-aaa3-4003-a107-d32012a4e613.jpg)
+
+<p><b>MultiChiefInventory</b> has subdomains:
+<ul>
+<li>material - catalogue of materials</li>
+<li>warehouse - warehouses of company</li>
+<li>bom - bill of materials</li>
+<li>im_order - internal material imOrder</li>
+</ul>
+
 <p>Database structure in files:</p>
 <ul>
-<li><b>MultiChiefInventory_DDL_v1.2.sql</b></li>
+<li><b>MultiChiefInventory_DDL_v1.3.sql</b></li>
 </ul>
 
 <h3>Database scheme</h3>
