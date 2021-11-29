@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
-import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 import ru.goryachev.multichief.inventory.model.dto.PreformDto;
 import ru.goryachev.multichief.inventory.model.dto.common.BomCommonDto;
@@ -34,7 +32,7 @@ public class UnitedBomController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CommonDto>> getAll () throws MultiChiefEmptyListException {
+    public ResponseEntity<List<CommonDto>> getAll () {
         return new ResponseEntity<>(standardBomService.getAll(), HttpStatus.OK);
     }
 
@@ -63,12 +61,12 @@ public class UnitedBomController {
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{bomId}")
-    public ResponseEntity<PreformDto> getPreformBom (@PathVariable Long bomId) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<PreformDto> getPreformBom (@PathVariable Long bomId) {
         return new ResponseEntity<>(preformBomService.getPreform(bomId), HttpStatus.OK);
     }
 
     @GetMapping("{bomId}/items")
-    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long bomId) throws MultiChiefEmptyListException, MultiChiefObjectNotFoundException {
+    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long bomId) {
         return new ResponseEntity<>(specialBomItemService.getAllByBomId(bomId), HttpStatus.OK);
     }
 
@@ -83,12 +81,12 @@ public class UnitedBomController {
     }*/
 
     @PostMapping("{bomId}/items")
-    public ResponseEntity<Object> createItems (@PathVariable Long bomId, @RequestBody @Valid ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<Object> createItems (@PathVariable Long bomId, @RequestBody @Valid ItemRequestDto itemRequestDto) {
         return new ResponseEntity<>(specialBomItemService.save(bomId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping("{bomId}/items")
-    public ResponseEntity<Object> updateItems (@PathVariable Long bomId, @RequestBody @Valid ItemRequestDto modifiedItemDto) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<Object> updateItems (@PathVariable Long bomId, @RequestBody @Valid ItemRequestDto modifiedItemDto) {
         return new ResponseEntity<>(specialBomItemService.save(bomId, modifiedItemDto), HttpStatus.CREATED);
     }
 

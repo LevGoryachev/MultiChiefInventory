@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
-import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 import ru.goryachev.multichief.inventory.model.dto.common.WarehouseCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
@@ -32,7 +30,7 @@ public class UnitedWarehouseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CommonDto>> getAll () throws MultiChiefEmptyListException {
+    public ResponseEntity<List<CommonDto>> getAll () {
         return new ResponseEntity<>(standardWarehouseService.getAll(), HttpStatus.OK);
     }
 
@@ -56,12 +54,12 @@ public class UnitedWarehouseController {
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{warehouseId}")
-    public ResponseEntity<PreformDto> getPreformBom (@PathVariable Long warehouseId) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<PreformDto> getPreformBom (@PathVariable Long warehouseId) {
         return new ResponseEntity<>(preformAvailabilityService.getPreform(warehouseId), HttpStatus.OK);
     }
 
     @GetMapping("{warehouseId}/items")
-    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long warehouseId) throws MultiChiefEmptyListException, MultiChiefObjectNotFoundException {
+    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long warehouseId) {
         return new ResponseEntity<>(specialAvailabilityService.getAllByWarehouseId(warehouseId), HttpStatus.OK);
     }
 
@@ -76,12 +74,12 @@ public class UnitedWarehouseController {
     }*/
 
     @PostMapping("{warehouseId}/items")
-    public ResponseEntity<Object> createItems (@PathVariable Long warehouseId, @RequestBody ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<Object> createItems (@PathVariable Long warehouseId, @RequestBody ItemRequestDto itemRequestDto) {
         return new ResponseEntity<>(specialAvailabilityService.save(warehouseId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping("{warehouseId}/items")
-    public ResponseEntity<Object> updateItems (@PathVariable Long warehouseId, @RequestBody ItemRequestDto modifiedItemDto) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<Object> updateItems (@PathVariable Long warehouseId, @RequestBody ItemRequestDto modifiedItemDto) {
         return new ResponseEntity<>(specialAvailabilityService.save(warehouseId, modifiedItemDto), HttpStatus.CREATED);
     }
 

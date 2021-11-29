@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
-import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 import ru.goryachev.multichief.inventory.model.dto.common.MaterialCommonDto;
 import ru.goryachev.multichief.inventory.service.implementation.StandardMaterialService;
@@ -25,12 +23,12 @@ public class MaterialController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CommonDto>> getAllMaterials () throws MultiChiefEmptyListException {
+    public ResponseEntity<List<CommonDto>> getAllMaterials () {
         return new ResponseEntity<>(standardMaterialService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<CommonDto> getById (@PathVariable Long id) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<CommonDto> getById (@PathVariable Long id) {
             return new ResponseEntity<>(standardMaterialService.getById(id), HttpStatus.OK);
     }
 

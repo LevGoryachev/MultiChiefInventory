@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
-import ru.goryachev.multichief.inventory.exception.MultiChiefObjectNotFoundException;
 import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 import ru.goryachev.multichief.inventory.model.dto.common.ImOrderCommonDto;
 import ru.goryachev.multichief.inventory.model.dto.request.ItemRequestDto;
@@ -34,17 +32,17 @@ public class UnitedImOrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CommonDto>> getAll () throws MultiChiefEmptyListException {
+    public ResponseEntity<List<CommonDto>> getAll () {
         return new ResponseEntity<>(standardImOrderService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Object> create (@RequestBody @Valid ImOrderCommonDto imOrderCommonDto) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<Object> create (@RequestBody @Valid ImOrderCommonDto imOrderCommonDto) {
         return new ResponseEntity<>(standardImOrderService.create(imOrderCommonDto), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Object> update (@RequestBody @Valid ImOrderCommonDto modifiedImOrder) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<Object> update (@RequestBody @Valid ImOrderCommonDto modifiedImOrder) {
         return new ResponseEntity<>(standardImOrderService.update(modifiedImOrder), HttpStatus.OK);
     }
 
@@ -58,22 +56,22 @@ public class UnitedImOrderController {
      * The preform can be used by the consumer (other microservice) for preparing ready-to-use document (ViewModel).
      */
     @GetMapping("{imOrderId}")
-    public ResponseEntity<PreformDto> getPreformImOrder (@PathVariable Long imOrderId) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<PreformDto> getPreformImOrder (@PathVariable Long imOrderId) {
         return new ResponseEntity<>(preformImOrderService.getPreform(imOrderId), HttpStatus.OK);
     }
 
     @GetMapping("{imOrderId}/items")
-    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long imOrderId) throws MultiChiefEmptyListException, MultiChiefObjectNotFoundException {
+    public ResponseEntity<List<ItemProjection>> getAllItems (@PathVariable Long imOrderId) {
         return new ResponseEntity<>(specialImOrderItemService.getAllByImOrderId(imOrderId), HttpStatus.OK);
     }
 
     @PostMapping("{imOrderId}/items")
-    public ResponseEntity<Object> createItems (@PathVariable Long imOrderId, @RequestBody ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<Object> createItems (@PathVariable Long imOrderId, @RequestBody ItemRequestDto itemRequestDto) {
         return new ResponseEntity<>(specialImOrderItemService.save(imOrderId, itemRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping("{imOrderId}/items")
-    public ResponseEntity<Object> updateItems (@PathVariable Long imOrderId, @RequestBody ItemRequestDto modifiedItemDto) throws MultiChiefObjectNotFoundException {
+    public ResponseEntity<Object> updateItems (@PathVariable Long imOrderId, @RequestBody ItemRequestDto modifiedItemDto) {
         return new ResponseEntity<>(specialImOrderItemService.save(imOrderId, modifiedItemDto), HttpStatus.CREATED);
     }
 
