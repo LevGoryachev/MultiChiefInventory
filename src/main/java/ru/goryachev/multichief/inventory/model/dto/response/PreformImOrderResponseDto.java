@@ -5,6 +5,7 @@ import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * PreformImOrderResponseDto is a preform for a presentable document - internal material order (for certain building construction or object)
@@ -83,5 +84,36 @@ public class PreformImOrderResponseDto implements PreformDto {
 
     public void setItems(List<ItemProjection> items) {
         this.items = items;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PreformImOrderResponseDto)) return false;
+        PreformImOrderResponseDto that = (PreformImOrderResponseDto) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getBomId(), that.getBomId()) &&
+                Objects.equals(getOrderTime(), that.getOrderTime()) &&
+                Objects.equals(getPosted(), that.getPosted()) &&
+                Objects.equals(getSent(), that.getSent()) &&
+                Objects.equals(getStatusExecuted(), that.getStatusExecuted()) &&
+                Objects.equals(getItems(), that.getItems());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getBomId(), getOrderTime(), getPosted(), getSent(), getStatusExecuted(), getItems());
+    }
+
+    @Override
+    public String toString() {
+        return "PreformImOrderResponseDto{" +
+                "id=" + id +
+                ", bomId=" + bomId +
+                ", orderTime=" + orderTime +
+                ", posted=" + posted +
+                ", sent=" + sent +
+                ", statusExecuted=" + statusExecuted +
+                '}';
     }
 }

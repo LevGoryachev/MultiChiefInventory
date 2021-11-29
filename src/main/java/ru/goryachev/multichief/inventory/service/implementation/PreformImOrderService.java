@@ -36,7 +36,7 @@ public class PreformImOrderService implements PreformService {
 
     @Override
     @Transactional
-    public PreformImOrderResponseDto getPreform (Long imOrderId) throws MultiChiefObjectNotFoundException {
+    public PreformImOrderResponseDto getPreform (Long imOrderId) {
 
         ImOrder imOrder = imOrderRepository.findById(imOrderId).orElseThrow(() -> new MultiChiefObjectNotFoundException(imOrderEntityAlias, imOrderId));
 

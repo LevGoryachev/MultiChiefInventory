@@ -36,7 +36,7 @@ public class PreformBomService implements PreformService {
 
     @Override
     @Transactional
-    public PreformBomResponseDto getPreform (Long bomId) throws MultiChiefObjectNotFoundException {
+    public PreformBomResponseDto getPreform (Long bomId) {
 
         Bom bom = bomRepository.findById(bomId).orElseThrow(() -> new MultiChiefObjectNotFoundException(bomEntityAlias, bomId));
 

@@ -6,8 +6,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.goryachev.multichief.inventory.exception.MultiChiefEmptyListException;
 import ru.goryachev.multichief.inventory.model.dto.CommonDto;
-import ru.goryachev.multichief.inventory.model.dto.common.WarehouseCommonDto;
-import ru.goryachev.multichief.inventory.model.entity.Material;
 import ru.goryachev.multichief.inventory.model.entity.Warehouse;
 import ru.goryachev.multichief.inventory.repository.WarehouseRepository;
 import ru.goryachev.multichief.inventory.service.StandardService;
@@ -41,7 +39,7 @@ public class StandardWarehouseService implements StandardService {
     }
 
     @Override
-    public List<CommonDto> getAll () throws MultiChiefEmptyListException {
+    public List<CommonDto> getAll () {
         List<Warehouse> allWarehouses = warehouseRepository.findAll();
         if (allWarehouses.isEmpty()) {
             throw new MultiChiefEmptyListException(warehouseEntityAlias);

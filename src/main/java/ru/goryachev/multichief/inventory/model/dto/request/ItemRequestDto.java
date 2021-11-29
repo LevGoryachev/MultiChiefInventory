@@ -3,6 +3,7 @@ package ru.goryachev.multichief.inventory.model.dto.request;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * ItemRequestDto is a transfer object for receiving a material item of document (bom (bill of materials) or order or warehouse etc.).
@@ -37,5 +38,19 @@ public class ItemRequestDto {
 
     public void setQty(Integer qty) {
         this.qty = qty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ItemRequestDto)) return false;
+        ItemRequestDto that = (ItemRequestDto) o;
+        return Objects.equals(getMaterialId(), that.getMaterialId()) &&
+                Objects.equals(getQty(), that.getQty());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMaterialId(), getQty());
     }
 }

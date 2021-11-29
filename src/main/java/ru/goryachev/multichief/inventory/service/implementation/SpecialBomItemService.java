@@ -49,7 +49,7 @@ public class SpecialBomItemService implements SpecialService {
         this.materialRepository = materialRepository;
     }
 
-    public List<ItemProjection> getAllByBomId(Long bomId) throws MultiChiefObjectNotFoundException, MultiChiefEmptyListException {
+    public List<ItemProjection> getAllByBomId(Long bomId) {
 
         if (!bomRepository.existsById(bomId)){
             throw new MultiChiefObjectNotFoundException(bomEntityAlias, bomId);
@@ -64,7 +64,7 @@ public class SpecialBomItemService implements SpecialService {
     }
 
     @Transactional
-    public Map<String, Object> save (Long bomId, ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
+    public Map<String, Object> save (Long bomId, ItemRequestDto itemRequestDto) {
         Bom bom = bomRepository.findById(bomId).orElseThrow(() -> new MultiChiefObjectNotFoundException(bomEntityAlias, bomId));
         Material material = materialRepository.findById(itemRequestDto.getMaterialId()).orElseThrow(() -> new MultiChiefObjectNotFoundException(materialEntityAlias, itemRequestDto.getMaterialId()));
         BomItem bomItem = new BomItem(bom, material, itemRequestDto.getQty());

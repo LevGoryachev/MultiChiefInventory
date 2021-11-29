@@ -46,7 +46,7 @@ public class StandardImOrderService implements StandardService {
     }
 
     @Override
-    public List<CommonDto> getAll () throws MultiChiefEmptyListException {
+    public List<CommonDto> getAll () {
         List<ImOrder> allImOrders = imOrderRepository.findAll();
         if (allImOrders.isEmpty()) {
             throw new MultiChiefEmptyListException(imOrderEntityAlias);
@@ -55,7 +55,7 @@ public class StandardImOrderService implements StandardService {
     }
 
     @Override
-    public Map<String, Object> create (CommonDto imOrderCommonDto) throws MultiChiefObjectNotFoundException {
+    public Map<String, Object> create (CommonDto imOrderCommonDto) {
         if(!bomRepository.existsById(((ImOrderCommonDto)imOrderCommonDto).getBomId())){
             throw new MultiChiefObjectNotFoundException(bomEntityAlias, ((ImOrderCommonDto)imOrderCommonDto).getBomId());
         }
@@ -70,7 +70,7 @@ public class StandardImOrderService implements StandardService {
     }
 
     @Override
-    public Map<String, Object> update (CommonDto modifiedImOrder) throws MultiChiefObjectNotFoundException {
+    public Map<String, Object> update (CommonDto modifiedImOrder) {
         if(!bomRepository.existsById(((ImOrderCommonDto)modifiedImOrder).getBomId())){
             throw new MultiChiefObjectNotFoundException(bomEntityAlias, ((ImOrderCommonDto)modifiedImOrder).getBomId());
         }

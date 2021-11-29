@@ -4,6 +4,7 @@ import ru.goryachev.multichief.inventory.model.dto.PreformDto;
 import ru.goryachev.multichief.inventory.model.dto.projection.ItemProjection;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * PreformWarehouseResponseDto is a preform for a presentable document - availability of materials in a warehouse (for certain building construction or object)
@@ -42,5 +43,28 @@ public class PreformWarehouseResponseDto implements PreformDto {
 
     public void setItems(List<ItemProjection> items) {
         this.items = items;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PreformWarehouseResponseDto)) return false;
+        PreformWarehouseResponseDto that = (PreformWarehouseResponseDto) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getWhAddress(), that.getWhAddress()) &&
+                Objects.equals(getItems(), that.getItems());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getWhAddress(), getItems());
+    }
+
+    @Override
+    public String toString() {
+        return "PreformWarehouseResponseDto{" +
+                "id=" + id +
+                ", whAddress='" + whAddress + '\'' +
+                '}';
     }
 }

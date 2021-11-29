@@ -8,5 +8,5 @@ import ru.goryachev.multichief.inventory.model.dto.PreformDto;
  * @version 1.1
  */
 public interface PreformService {
-    PreformDto getPreform (Long id) throws Exception;
+    PreformDto getPreform (Long id);
 }

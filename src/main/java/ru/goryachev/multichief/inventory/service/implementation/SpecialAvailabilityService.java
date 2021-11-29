@@ -45,7 +45,7 @@ public class SpecialAvailabilityService implements SpecialService {
         this.materialRepository = materialRepository;
     }
 
-    public List<ItemProjection> getAllByWarehouseId(Long warehouseId) throws MultiChiefObjectNotFoundException, MultiChiefEmptyListException {
+    public List<ItemProjection> getAllByWarehouseId(Long warehouseId) {
 
         if (!warehouseRepository.existsById(warehouseId)){
             throw new MultiChiefObjectNotFoundException(warehouseEntityAlias, warehouseId);
@@ -60,7 +60,7 @@ public class SpecialAvailabilityService implements SpecialService {
     }
 
     @Transactional
-    public Map<String, Object> save (Long warehouseId, ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
+    public Map<String, Object> save (Long warehouseId, ItemRequestDto itemRequestDto) {
         Warehouse warehouse = warehouseRepository.findById(warehouseId).orElseThrow(() -> new MultiChiefObjectNotFoundException(warehouseEntityAlias, warehouseId));
         Material material = materialRepository.findById(itemRequestDto.getMaterialId()).orElseThrow(() -> new MultiChiefObjectNotFoundException(materialEntityAlias, itemRequestDto.getMaterialId()));
         Availability availability = new Availability(warehouse, material, itemRequestDto.getQty());

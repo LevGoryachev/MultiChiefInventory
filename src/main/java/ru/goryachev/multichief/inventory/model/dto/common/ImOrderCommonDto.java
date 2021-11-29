@@ -4,6 +4,7 @@ import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * ImOrderCommonDto is an intermediate object of order (for certain building construction),
@@ -73,5 +74,35 @@ public class ImOrderCommonDto implements CommonDto {
 
     public void setStatusExecuted(Boolean statusExecuted) {
         this.statusExecuted = statusExecuted;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ImOrderCommonDto)) return false;
+        ImOrderCommonDto that = (ImOrderCommonDto) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getBomId(), that.getBomId()) &&
+                Objects.equals(getOrderTime(), that.getOrderTime()) &&
+                Objects.equals(getPosted(), that.getPosted()) &&
+                Objects.equals(getSent(), that.getSent()) &&
+                Objects.equals(getStatusExecuted(), that.getStatusExecuted());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getBomId(), getOrderTime(), getPosted(), getSent(), getStatusExecuted());
+    }
+
+    @Override
+    public String toString() {
+        return "ImOrderCommonDto{" +
+                "id=" + id +
+                ", bomId=" + bomId +
+                ", orderTime=" + orderTime +
+                ", posted=" + posted +
+                ", sent=" + sent +
+                ", statusExecuted=" + statusExecuted +
+                '}';
     }
 }

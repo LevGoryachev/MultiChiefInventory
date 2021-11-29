@@ -39,7 +39,7 @@ public class StandardBomService implements StandardService {
     }
 
     @Override
-    public List<CommonDto> getAll () throws MultiChiefEmptyListException {
+    public List<CommonDto> getAll () {
         List<Bom> allBoms = bomRepository.findAll();
         if (allBoms.isEmpty()) {
             throw new MultiChiefEmptyListException(bomEntityAlias);

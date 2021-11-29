@@ -37,7 +37,7 @@ public class PreformAvailabilityService implements PreformService {
 
     @Override
     @Transactional
-    public PreformWarehouseResponseDto getPreform (Long warehouseId) throws MultiChiefObjectNotFoundException {
+    public PreformWarehouseResponseDto getPreform (Long warehouseId) {
 
         Warehouse warehouse = warehouseRepository.findById(warehouseId).orElseThrow(() -> new MultiChiefObjectNotFoundException(warehouseEntityAlias, warehouseId));
 

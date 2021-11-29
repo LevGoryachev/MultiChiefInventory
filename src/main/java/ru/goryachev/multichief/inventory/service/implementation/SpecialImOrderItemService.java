@@ -50,7 +50,7 @@ public class SpecialImOrderItemService implements SpecialService {
         this.bomRepository = bomRepository;
     }
 
-    public List<ItemProjection> getAllByImOrderId(Long imOrderId) throws MultiChiefObjectNotFoundException, MultiChiefEmptyListException {
+    public List<ItemProjection> getAllByImOrderId(Long imOrderId) {
 
         if (!imOrderRepository.existsById(imOrderId)){
             throw new MultiChiefObjectNotFoundException(imOrderEntityAlias, imOrderId);
@@ -65,7 +65,7 @@ public class SpecialImOrderItemService implements SpecialService {
     }
 
     @Transactional
-    public Map<String, Object> save (Long imOrderId, ItemRequestDto itemRequestDto) throws MultiChiefObjectNotFoundException {
+    public Map<String, Object> save (Long imOrderId, ItemRequestDto itemRequestDto) {
 
         ImOrder imOrder = imOrderRepository.findById(imOrderId).orElseThrow(() -> new MultiChiefObjectNotFoundException(imOrderEntityAlias, imOrderId));
         Bom bom = bomRepository.getOne(imOrder.getBomId());

@@ -40,7 +40,7 @@ public class StandardMaterialService implements StandardService {
     }
 
     @Override
-    public List<CommonDto> getAll () throws MultiChiefEmptyListException {
+    public List<CommonDto> getAll () {
         List<Material> allMaterials = materialRepository.findAll();
         if (allMaterials.isEmpty()) {
             throw new MultiChiefEmptyListException(materialEntityAlias);
@@ -50,7 +50,7 @@ public class StandardMaterialService implements StandardService {
 
     //findById: items.stream().findAny().map((e) -> items).orElseThrow(NotFoundException::new);
 
-    public CommonDto getById (Long id) throws MultiChiefObjectNotFoundException {
+    public CommonDto getById (Long id) {
         Material material = materialRepository.findById(id).orElseThrow(() -> new MultiChiefObjectNotFoundException(materialEntityAlias, id));
         return materialConverter.entityToDto(material);
     }

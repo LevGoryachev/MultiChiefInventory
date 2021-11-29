@@ -3,6 +3,7 @@ package ru.goryachev.multichief.inventory.model.dto.common;
 import ru.goryachev.multichief.inventory.model.dto.CommonDto;
 
 import javax.validation.constraints.*;
+import java.util.Objects;
 
 
 /**
@@ -70,5 +71,33 @@ public class MaterialCommonDto implements CommonDto {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MaterialCommonDto)) return false;
+        MaterialCommonDto that = (MaterialCommonDto) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getUm(), that.getUm()) &&
+                Objects.equals(getUnitWeightKg(), that.getUnitWeightKg()) &&
+                Objects.equals(getNotes(), that.getNotes());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getUm(), getUnitWeightKg(), getNotes());
+    }
+
+    @Override
+    public String toString() {
+        return "MaterialCommonDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", um='" + um + '\'' +
+                ", unitWeightKg=" + unitWeightKg +
+                ", notes='" + notes + '\'' +
+                '}';
     }
 }
