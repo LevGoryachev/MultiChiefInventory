@@ -1,15 +1,15 @@
 # MultiChiefInventory
-<p><b>MultiChief</b> is an experimental microservice-based ERP system for construction industry (on-line and off-line interaction between departments and employees). <p/>
+<p><b>MultiChief</b> is an experimental microservice-based ERP system (implementation for construction industry).<p/>
 <p><b>MultiChiefInventory</b> is a microservice that is responsible for preparing data (DTO) for orchestrators (modules of <a href="https://github.com/LevGoryachev/MultiChiefMain">MultiChiefMain</a>).</p>
 <p><b>Summary: Java 11, Spring-Boot, Spring Security, Spring Data JPA (Hibernate)</b></p>
 <p><b>Database: PostgreSQL</b></p>
-
+<p><b>API:</b> deploy and follow /swagger-ui/</p>
 
 
 <h3>Architecture</h3>
-<p>Customized microservice-based domain-driven architecture.<p/>
-<p><b>MultiChiefInventory</b> is responsible for a certain functions of domain Inventory (CRUD operations of subdomains, preparing special DTOs)
-and does not interact with both other microservices and business-consumer-services.</p>
+<p>patterns: multi-layered REST service<p/>
+<p><b>MultiChiefInventory</b> is responsible for a certain functions of domain "Inventory" (CRUD operations of subdomains, preparing special DTOs)
+and does not interact with both other microservices and clients.</p>
 
 ![MultiChiefInventoryDiagram](https://user-images.githubusercontent.com/61917893/141861463-67b93f3e-aaa3-4003-a107-d32012a4e613.jpg)
 

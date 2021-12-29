@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 /**
- * RestControllerAdvice handles exceptions of methods and applies globally to all RestControllers (ru.goryachev.multichief.inventory.api)
+ * RestControllerAdvice handles exceptions of MultiChief RestControllers
  * @author Lev Goryachev
  * @version 1.1
  */
@@ -30,7 +30,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     String appName;
 
     @ExceptionHandler({MultiChiefObjectNotFoundException.class})
-    public ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request) {
+    public ResponseEntity<Object> handleObjectNotFoundException(Exception ex, WebRequest request) {
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("service", appName);
         responseBody.put("timestamp", LocalDateTime.now());

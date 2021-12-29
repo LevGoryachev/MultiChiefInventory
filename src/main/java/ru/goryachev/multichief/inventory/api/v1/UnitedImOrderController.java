@@ -16,6 +16,12 @@ import ru.goryachev.multichief.inventory.service.implementation.PreformImOrderSe
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * MultiChiefInventory API: see app/swagger-ui/
+ * @author Lev Goryachev
+ * @version 1
+ */
+
 @RestController
 @RequestMapping("/api/v1/orders")
 public class UnitedImOrderController {
